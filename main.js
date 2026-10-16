@@ -18,7 +18,7 @@
   /* ---------------- i18n ---------------- */
   var EN = {
     'skip': 'Skip to content',
-    'nav.services': 'Services', 'nav.work': 'Work', 'nav.process': 'Process', 'nav.cta': "Let's talk",
+    'nav.about': 'About', 'nav.services': 'Services', 'nav.work': 'Work', 'nav.process': 'Process', 'nav.cta': "Let's talk",
     'hero.badge': 'Available for 2 new projects in November',
     'hero.title': 'I build fast websites<br>that turn visitors<br>into clients.',
     'hero.sub': "I'm Carlos, a full-stack developer. I design, build and launch your entire project, from the interface to the database, with no middlemen and a fixed price.",
@@ -43,6 +43,14 @@
     'p6.type': 'Brand site + 3D',
     'p6.d': 'Nail art, tooth gems and threading studio in Dos Hermanas. Bold identity, floating 3D objects, work gallery and Booksy booking.',
     'work.live': 'See it live',
+    'chip.a': '5 sites launched in 2026',
+    'about.label': 'about me', 'about.title': "Hi, I'm Carlos.<br>The person behind your&nbsp;website.",
+    'about.p1': 'I am a full-stack developer working with real businesses: padel clubs, nail studios, service companies. I like sitting down with the owner, understanding what they need and turning it into a website that works for them.',
+    'about.p2': 'With me you are not talking to an agency or a salesperson. You talk to the person who designs and codes every line of your project, start to finish.',
+    'about.f1': 'sites published in 2026', 'about.f2': 'cities with clients', 'about.f3': 'person, start to finish', 'about.cta': "Let's grab a coffee",
+    'life.label': 'away from the screen', 'life.title': 'Beyond the code.',
+    'life.d': 'The best ideas never come from the desk. They come from a good conversation, a walk or a dinner with a view.',
+    'life.c1': 'out for a walk', 'life.c2': 'nights by the sea', 'life.c3': 'good company', 'life.c4': 'long after dinner talks', 'life.ig': 'More on Instagram',
     'p3.t': 'Your project could be next.', 'p3.d': 'Tell me what you need and within 24 h you get a proposal with price and dates.',
     'process.label': 'process', 'process.title': 'Four steps. Zero surprises.',
     'st1.t': 'Discovery call', 'st1.d': '30 minutes to understand your business and goals. Within 48 h you get a fixed price proposal.',
@@ -73,13 +81,13 @@
       roles: ['Next.js y React', 'APIs con Node.js', 'Supabase y PostgreSQL', 'tiendas que venden', 'webs que cargan en < 1 s'],
       accWords: ['plantillas.', 'clic.'], copied: 'Email copiado', langSet: 'Idioma: español',
       mailSubject: 'Nuevo proyecto', none: 'Sin resultados',
-      cmds: { services: 'Ir a servicios', work: 'Ver proyectos', process: 'Ver proceso', stack: 'Ver stack', faq: 'Preguntas frecuentes', contact: 'Contactar', email: 'Copiar email', lang: 'Switch to English', github: 'Abrir GitHub', top: 'Volver arriba' }
+      cmds: { about: 'Sobre mí', insta: 'Abrir Instagram', services: 'Ir a servicios', work: 'Ver proyectos', process: 'Ver proceso', stack: 'Ver stack', faq: 'Preguntas frecuentes', contact: 'Contactar', email: 'Copiar email', lang: 'Switch to English', github: 'Abrir GitHub', top: 'Volver arriba' }
     },
     en: {
       roles: ['Next.js & React', 'Node.js APIs', 'Supabase & PostgreSQL', 'stores that sell', 'sites that load in < 1 s'],
       accWords: ['templates.', 'click.'], copied: 'Email copied', langSet: 'Language: English',
       mailSubject: 'New project', none: 'No results',
-      cmds: { services: 'Go to services', work: 'See work', process: 'See process', stack: 'See stack', faq: 'FAQ', contact: 'Get in touch', email: 'Copy email', lang: 'Cambiar a español', github: 'Open GitHub', top: 'Back to top' }
+      cmds: { about: 'About me', insta: 'Open Instagram', services: 'Go to services', work: 'See work', process: 'See process', stack: 'See stack', faq: 'FAQ', contact: 'Get in touch', email: 'Copy email', lang: 'Cambiar a español', github: 'Open GitHub', top: 'Back to top' }
     }
   };
   var ES = {}; // se rellena leyendo el HTML original
@@ -464,6 +472,7 @@
       return [
         { i: 'ph-chat-circle-dots', t: c.contact, run: go('contacto') },
         { i: 'ph-copy', t: c.email, run: copyEmail },
+        { i: 'ph-user', t: c.about, run: go('sobre-mi') },
         { i: 'ph-squares-four', t: c.services, run: go('servicios') },
         { i: 'ph-folder-open', t: c.work, run: go('proyectos') },
         { i: 'ph-path', t: c.process, run: go('proceso') },
@@ -471,6 +480,7 @@
         { i: 'ph-question', t: c.faq, run: go('faq') },
         { i: 'ph-translate', t: c.lang, run: function () { applyLang(lang === 'es' ? 'en' : 'es'); } },
         { i: 'ph-github-logo', t: c.github, run: function () { window.open('https://github.com/ErCarlo672', '_blank', 'noopener'); } },
+        { i: 'ph-instagram-logo', t: c.insta, run: function () { window.open('https://www.instagram.com/caarloos_23/', '_blank', 'noopener'); } },
         { i: 'ph-arrow-up', t: c.top, run: go('top') }
       ];
     }
@@ -500,6 +510,69 @@
   }
 
   /* ---------------- Easter egg en consola ---------------- */
+  /* ---------------- Retrato 3D del hero ---------------- */
+  function initPortrait() {
+    var stage = $('#portraitStage'), hero = $('#top'); if (!stage || !hero) return;
+    var chips = $$('.portrait__chip', stage);
+    if (finePointer) {
+      hero.addEventListener('pointermove', function (e) {
+        var r = stage.getBoundingClientRect();
+        var x = (e.clientX - (r.left + r.width / 2)) / window.innerWidth;
+        var y = (e.clientY - (r.top + r.height / 2)) / window.innerHeight;
+        stage.style.setProperty('--ry', (x * 22).toFixed(2) + 'deg');
+        stage.style.setProperty('--rx', (-y * 18).toFixed(2) + 'deg');
+        chips.forEach(function (c, i) { c.style.translate = (x * (14 + i * 10)).toFixed(1) + 'px ' + (y * (10 + i * 8)).toFixed(1) + 'px'; });
+      });
+      hero.addEventListener('pointerleave', function () {
+        stage.style.setProperty('--ry', '0deg'); stage.style.setProperty('--rx', '0deg');
+        chips.forEach(function (c) { c.style.translate = ''; });
+      });
+    }
+    // Entrada: el retrato gira desde el fondo
+    stage.animate([
+      { opacity: 0, transform: 'perspective(1200px) rotateY(-35deg) rotateX(12deg) translateZ(-200px)' },
+      { opacity: 1, transform: 'perspective(1200px) rotateY(0deg) rotateX(0deg) translateZ(0)' }
+    ], { duration: 1600, delay: 900, easing: 'cubic-bezier(0.32, 0.72, 0, 1)', fill: 'backwards' });
+  }
+
+  /* ---------------- Galería personal fijada con scroll ---------------- */
+  function initLife() {
+    var sec = $('#vida'), track = $('#lifeTrack'); if (!sec || !track) return;
+    var cards = $$('.life__card', track);
+    var mq = window.matchMedia('(min-width: 900px)');
+    var dist = 0, ticking = false;
+    function measure() {
+      if (!mq.matches) {
+        sec.classList.remove('is-pinned'); sec.style.height = ''; track.style.transform = '';
+        cards.forEach(function (c) { c.style.transform = ''; });
+        return;
+      }
+      sec.classList.add('is-pinned');
+      dist = Math.max(0, track.scrollWidth - window.innerWidth);
+      sec.style.height = (window.innerHeight + dist) + 'px';
+      update();
+    }
+    function update() {
+      ticking = false;
+      if (!mq.matches) return;
+      var r = sec.getBoundingClientRect();
+      var p = Math.max(0, Math.min(1, -r.top / Math.max(1, dist)));
+      track.style.transform = 'translate3d(' + (-p * dist).toFixed(1) + 'px,0,0)';
+      var mid = window.innerWidth / 2;
+      cards.forEach(function (c) {
+        var cr = c.getBoundingClientRect();
+        var d = (cr.left + cr.width / 2 - mid) / mid; // -1 izquierda, 1 derecha
+        d = Math.max(-1.5, Math.min(1.5, d));
+        c.style.transform = 'perspective(1400px) rotateY(' + (-d * 22).toFixed(2) + 'deg) translateZ(' + (-Math.abs(d) * 120).toFixed(1) + 'px) translateY(' + (Math.abs(d) * 18).toFixed(1) + 'px)';
+      });
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(measure, 150); });
+    if (mq.addEventListener) mq.addEventListener('change', measure);
+    $$('img', track).forEach(function (img) { if (!img.complete) img.addEventListener('load', measure); });
+    measure();
+  }
+
   function initConsole() {
     if (window.console) console.log('%c<cs/>%c  ¿Curioseando el código? Me caes bien. Escríbeme: ' + EMAIL, 'background:#C5FF4A;color:#0B0F00;padding:4px 8px;border-radius:4px;font-weight:700', 'color:#9B9B9B');
   }
@@ -520,6 +593,8 @@
     safe(initCode, 'code');
     safe(initContact, 'contact');
     safe(initPalette, 'palette');
+    safe(initPortrait, 'portrait');
+    safe(initLife, 'life');
     safe(initConsole, 'console');
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();

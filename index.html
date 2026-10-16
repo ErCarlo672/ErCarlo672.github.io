@@ -26,10 +26,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/photos/hero.webp?v=20261016" type="image/webp">
   <link rel="stylesheet" href="lib/phosphor/style.css?v=20261016">
-  <link rel="stylesheet" href="styles.css?v=20261016c">
+  <link rel="stylesheet" href="styles.css?v=20261016d">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Person","name":"Carlos Salguero","jobTitle":"Desarrollador web full-stack","url":"https://ercarlo672.github.io/","image":"https://ercarlo672.github.io/assets/og.png","email":"carlossalguero09@gmail.com","sameAs":["https://github.com/ErCarlo672","https://www.linkedin.com/in/carlos-salguero-466617304/","https://www.instagram.com/caarloos_23/"],"knowsAbout":["React","Next.js","Node.js","Supabase","PostgreSQL","SEO técnico"]}
+  {"@context":"https://schema.org","@type":"Person","name":"Carlos Salguero","jobTitle":"Desarrollador web full-stack","url":"https://ercarlo672.github.io/","image":"https://ercarlo672.github.io/assets/photos/hero.webp","email":"carlossalguero09@gmail.com","sameAs":["https://github.com/ErCarlo672","https://www.linkedin.com/in/carlos-salguero-466617304/","https://www.instagram.com/caarloos_23/"],"knowsAbout":["React","Next.js","Node.js","Supabase","PostgreSQL","SEO técnico"]}
   </script>
 </head>
 <body>
@@ -51,6 +52,7 @@
   <header class="nav" id="nav">
     <a href="#top" class="nav__logo" aria-label="Inicio"><span class="c-acc">&lt;</span>cs<span class="c-acc">/&gt;</span></a>
     <nav class="nav__links" aria-label="Principal">
+      <a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a>
       <a href="#servicios" data-i18n="nav.services">Servicios</a>
       <a href="#proyectos" data-i18n="nav.work">Proyectos</a>
       <a href="#proceso" data-i18n="nav.process">Proceso</a>
@@ -65,6 +67,7 @@
 
   <div class="menu" id="menu" aria-hidden="true">
     <nav class="menu__links" aria-label="Móvil">
+      <a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a>
       <a href="#servicios" data-i18n="nav.services">Servicios</a>
       <a href="#proyectos" data-i18n="nav.work">Proyectos</a>
       <a href="#proceso" data-i18n="nav.process">Proceso</a>
@@ -81,7 +84,8 @@
       <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
       <div class="hero__grid" aria-hidden="true"></div>
       <div class="hero__glow" id="heroGlow" aria-hidden="true"></div>
-      <div class="wrap hero__inner">
+      <div class="wrap hero__layout">
+      <div class="hero__inner">
         <p class="badge reveal"><span class="pulse"></span><span data-i18n="hero.badge">Disponible para 2 proyectos nuevos en noviembre</span></p>
         <h1 class="hero__title reveal" data-i18n-html="hero.title">Construyo webs rápidas<br>que convierten visitas<br>en clientes.</h1>
         <p class="hero__sub reveal" data-i18n="hero.sub">Soy Carlos, desarrollador full-stack. Diseño, programo y lanzo tu proyecto completo, de la interfaz a la base de datos, sin intermediarios y con un presupuesto cerrado.</p>
@@ -96,6 +100,20 @@
           <li><b class="mono"><span data-count="24">24</span> h</b><span data-i18n="stats.reply">tiempo de respuesta</span></li>
           <li><b class="mono"><span data-count="30">30</span> d</b><span data-i18n="stats.support">de soporte incluido</span></li>
         </ul>
+      </div>
+      <figure class="portrait" id="portrait">
+        <div class="portrait__stage" id="portraitStage">
+          <div class="portrait__ring" aria-hidden="true"></div>
+          <div class="portrait__card">
+            <img src="assets/photos/hero.webp?v=20261016" alt="Carlos Salguero sonriendo, con polo blanco, en una terraza junto al mar al anochecer" width="800" height="1000" fetchpriority="high">
+            <span class="portrait__scan" aria-hidden="true"></span>
+            <figcaption class="portrait__tag mono"><span class="pulse"></span>carlos.jpg · online</figcaption>
+          </div>
+          <div class="portrait__chip portrait__chip--a mono" aria-hidden="true"><i class="ph ph-rocket-launch"></i><span data-i18n="chip.a">5 webs lanzadas en 2026</span></div>
+          <div class="portrait__chip portrait__chip--b mono" aria-hidden="true"><i class="ph ph-code"></i><span>full-stack</span></div>
+          <div class="portrait__chip portrait__chip--c mono" aria-hidden="true"><i class="ph ph-cube"></i><span>Three.js · 3D</span></div>
+        </div>
+      </figure>
       </div>
       <a href="#servicios" class="hero__scroll mono" aria-label="Bajar"><span>scroll</span><i></i></a>
     </section>
@@ -155,6 +173,34 @@
     <section class="tagline">
       <div class="wrap">
         <p class="tagline__text" id="tagline" data-i18n="tagline">No vendo plantillas. Escribo cada línea pensando en quién la va a usar y en lo que tu negocio necesita que pase después del clic.</p>
+      </div>
+    </section>
+
+    <!-- SOBRE MÍ -->
+    <section class="section about" id="sobre-mi">
+      <div class="wrap about__grid">
+        <figure class="about__photo reveal">
+          <div class="about__frame tilt">
+            <img src="assets/photos/about.webp?v=20261016" alt="Carlos Salguero sentado con los brazos cruzados delante de un mural pintado" loading="lazy" width="880" height="1100">
+          </div>
+          <a class="about__badge mono" href="https://www.instagram.com/caarloos_23/" target="_blank" rel="noopener"><i class="ph ph-instagram-logo"></i>caarloos_23</a>
+        </figure>
+        <div class="about__text">
+          <p class="label mono reveal" data-scramble>00 / <span data-i18n="about.label">sobre mí</span></p>
+          <h2 class="h2 reveal" data-i18n-html="about.title">Hola, soy Carlos.<br>La persona detrás de tu&nbsp;web.</h2>
+          <!-- EDITAR: cuenta aquí tu historia con tus palabras -->
+          <p class="lead reveal" data-i18n="about.p1">Soy desarrollador full-stack y trabajo con negocios reales: clubes de pádel, estudios de uñas, empresas de servicios. Me gusta sentarme con el dueño, entender qué necesita y convertirlo en una web que trabaje por él.</p>
+          <p class="lead reveal" data-i18n="about.p2">Conmigo no hablas con una agencia ni con un comercial. Hablas con quien diseña y programa cada línea de tu proyecto, de principio a fin.</p>
+          <ul class="about__facts reveal">
+            <li><b class="mono">5</b><span data-i18n="about.f1">webs publicadas en 2026</span></li>
+            <li><b class="mono">3</b><span data-i18n="about.f2">ciudades con clientes</span></li>
+            <li><b class="mono">1</b><span data-i18n="about.f3">persona, de principio a fin</span></li>
+          </ul>
+          <div class="about__ctas reveal">
+            <a href="#contacto" class="btn btn--acc magnetic"><span data-i18n="about.cta">Tomemos un café</span><i class="ph ph-coffee"></i></a>
+            <a href="https://www.instagram.com/caarloos_23/" class="link-arrow" target="_blank" rel="noopener"><i class="ph ph-instagram-logo"></i><span>@caarloos_23</span></a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -281,6 +327,29 @@
       </div>
     </section>
 
+    <!-- MÁS ALLÁ DEL CÓDIGO -->
+    <section class="life" id="vida" aria-label="Más allá del código">
+      <div class="life__sticky">
+        <div class="wrap life__head">
+          <p class="label mono" data-scramble>✦ / <span data-i18n="life.label">fuera de la pantalla</span></p>
+          <h2 class="h2" data-i18n="life.title">Más allá del código.</h2>
+          <p class="lead" data-i18n="life.d">Las mejores ideas no salen del escritorio. Salen de una buena conversación, un paseo o una cena con vistas.</p>
+        </div>
+        <div class="life__track" id="lifeTrack">
+          <figure class="life__card"><img src="assets/photos/calle.webp?v=20261016" alt="Carlos con gorra y camiseta gris en la calle una tarde de verano" loading="lazy" width="800" height="1000"><figcaption class="mono">#01 · <span data-i18n="life.c1">de paseo</span></figcaption></figure>
+          <figure class="life__card life__card--wide"><img src="assets/photos/noche.webp?v=20261016" alt="Carlos de perfil con polo blanco en una terraza junto al mar de noche" loading="lazy" width="1200" height="800"><figcaption class="mono">#02 · <span data-i18n="life.c2">noches junto al mar</span></figcaption></figure>
+          <figure class="life__card"><img src="assets/photos/sonrisa.webp?v=20261016" alt="Carlos sonriendo con polo granate en una terraza con plantas" loading="lazy" width="800" height="1000"><figcaption class="mono">#03 · <span data-i18n="life.c3">buena compañía</span></figcaption></figure>
+          <figure class="life__card life__card--wide"><img src="assets/photos/terraza.webp?v=20261016" alt="Carlos sonriendo y mirando a cámara en una terraza iluminada" loading="lazy" width="1200" height="800"><figcaption class="mono">#04 · <span data-i18n="life.c4">sobremesas largas</span></figcaption></figure>
+          <a class="life__card life__ig" href="https://www.instagram.com/caarloos_23/" target="_blank" rel="noopener">
+            <i class="ph ph-instagram-logo"></i>
+            <span class="life__ig-t" data-i18n="life.ig">Más en Instagram</span>
+            <span class="mono c-acc">@caarloos_23</span>
+            <span class="life__ig-go"><i class="ph ph-arrow-up-right"></i></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- FAQ -->
     <section class="section" id="faq">
       <div class="wrap faq">
@@ -358,6 +427,6 @@
 
   <div class="toast mono" id="toast" role="status"></div>
 
-  <script src="main.js?v=20261016c" defer></script>
+  <script src="main.js?v=20261016d" defer></script>
 </body>
 </html>

@@ -486,3 +486,154 @@ a.project__frame { display: block; color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .marquee__track { animation-duration: 120s; }
 }
+
+/* ==========================================================
+   Capa personal: retrato 3D, sobre mí y galería
+   ========================================================== */
+
+/* ---------- Hero con retrato ---------- */
+.hero__layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: var(--s9); align-items: center; }
+.portrait { margin: 0; position: relative; perspective: 1200px; }
+.portrait__stage {
+  position: relative; transform-style: preserve-3d; will-change: transform;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 1.2s var(--ease);
+  animation: floaty 7s ease-in-out infinite;
+}
+@keyframes floaty { 0%, 100% { translate: 0 0; } 50% { translate: 0 -12px; } }
+.portrait__card {
+  position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 4 / 5;
+  background: var(--bg-3); border: 1px solid rgba(255, 255, 255, .1);
+  box-shadow: 0 60px 120px -40px rgba(0, 0, 0, .95), 0 0 0 1px rgba(197, 255, 74, .08);
+  transform: translateZ(0);
+}
+.portrait__card img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.05) contrast(1.03); transform: scale(1.06); transition: transform 1.6s var(--ease); }
+.portrait:hover .portrait__card img { transform: scale(1.1); }
+.portrait__card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, .75));
+}
+.portrait__scan {
+  position: absolute; left: 0; right: 0; height: 2px; top: 0; z-index: 1; pointer-events: none;
+  background: var(--acc); box-shadow: 0 0 16px 2px var(--acc); opacity: 0;
+  animation: scan 5s var(--ease) infinite;
+}
+@keyframes scan { 0% { top: 0; opacity: 0; } 10% { opacity: .7; } 60% { opacity: .7; } 70%, 100% { top: 100%; opacity: 0; } }
+.portrait__tag {
+  position: absolute; left: var(--s4); bottom: var(--s4); z-index: 2; display: inline-flex; align-items: center; gap: var(--s2);
+  font-size: 12px; line-height: 16px; color: var(--text); padding: var(--s1) var(--s3); border-radius: 999px;
+  background: rgba(0, 0, 0, .55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, .12);
+}
+@property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.portrait__ring {
+  position: absolute; inset: -14px; border-radius: 32px; z-index: -1; transform: translateZ(-60px);
+  background: conic-gradient(from var(--ang, 0deg), transparent 0deg, var(--acc) 60deg, transparent 120deg, transparent 200deg, var(--cyan) 260deg, transparent 320deg);
+  filter: blur(18px); opacity: .55; animation: spinRing 8s linear infinite;
+}
+@keyframes spinRing { to { --ang: 360deg; } }
+.portrait__chip {
+  position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: var(--s2); white-space: nowrap;
+  font-size: 12px; line-height: 16px; padding: var(--s2) var(--s3); border-radius: 999px;
+  background: rgba(24, 24, 24, .8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line); color: var(--text); box-shadow: 0 20px 40px -12px rgba(0, 0, 0, .8);
+}
+.portrait__chip i { color: var(--acc); font-size: 16px; }
+.portrait__chip--a { top: 12%; left: -18%; transform: translateZ(90px); }
+.portrait__chip--b { top: 46%; right: -12%; transform: translateZ(130px); }
+.portrait__chip--c { bottom: 14%; left: -10%; transform: translateZ(60px); }
+
+/* ---------- Sobre mí ---------- */
+.about__grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: var(--s10); align-items: center; }
+.about__photo { margin: 0; position: relative; }
+.about__frame {
+  border-radius: 24px; overflow: hidden; border: 1px solid var(--line); background: var(--bg-3);
+  transition: transform .8s var(--ease), box-shadow .8s var(--ease); box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .9);
+}
+.about__frame img { aspect-ratio: 4 / 5; width: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); transition: filter 1.4s var(--ease) .3s, transform 1.6s var(--ease); }
+.about__photo.is-in .about__frame img { filter: grayscale(0); }
+.about__photo:hover .about__frame img { transform: scale(1.04); }
+.about__photo::before {
+  content: ""; position: absolute; inset: var(--s5) calc(var(--s5) * -1) calc(var(--s5) * -1) var(--s5); z-index: -1;
+  border-radius: 24px; border: 1px solid rgba(197, 255, 74, .35);
+}
+.about__badge {
+  position: absolute; right: var(--s5); bottom: calc(var(--s5) * -1); display: inline-flex; align-items: center; gap: var(--s2);
+  padding: var(--s2) var(--s4); border-radius: 999px; background: var(--acc); color: var(--acc-ink); font-size: 14px; line-height: 20px; font-weight: 500;
+  box-shadow: 0 20px 40px -12px rgba(197, 255, 74, .45); transition: transform .7s var(--ease);
+}
+.about__badge:hover { transform: translateY(-3px) rotate(-2deg); }
+.about__badge i { font-size: 18px; }
+.about__text { display: grid; gap: var(--s5); }
+.about__text .h2 { margin-bottom: 0; }
+.about__facts { list-style: none; padding: 0; margin: var(--s3) 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+.about__facts li { display: grid; gap: var(--s1); padding: var(--s4); border-radius: 16px; background: var(--bg-2); border: 1px solid rgba(255, 255, 255, .06); }
+.about__facts b { font-size: 36px; line-height: 40px; font-weight: 500; color: var(--acc); }
+.about__facts span { font-size: 14px; line-height: 20px; color: var(--muted); }
+.about__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s5); margin-top: var(--s3); }
+.about__ctas .link-arrow i { font-size: 20px; }
+
+/* ---------- Galería: por defecto carrusel nativo (móvil y sin JS).
+   Con JS en escritorio se fija (.is-pinned) y avanza con el scroll. */
+.life { padding: var(--s11) 0; border-top: 1px solid var(--line); position: relative; }
+.life__head .h2 { margin-bottom: var(--s4); }
+.life__head .lead { margin-bottom: var(--s8); }
+.life__track {
+  display: flex; gap: var(--s5); padding: var(--s4) max(var(--s5), calc((100vw - var(--wrap)) / 2)) var(--s6);
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; perspective: 1400px;
+}
+.life__track::-webkit-scrollbar { display: none; }
+.life__card {
+  position: relative; flex: none; width: min(320px, 72vw); aspect-ratio: 4 / 5; margin: 0; border-radius: 20px; overflow: hidden;
+  scroll-snap-align: center; background: var(--bg-3); border: 1px solid rgba(255, 255, 255, .08);
+  will-change: transform; transition: border-color .7s var(--ease);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .9);
+}
+.life__card--wide { width: min(480px, 86vw); aspect-ratio: 3 / 2; align-self: center; }
+.life__card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+.life__card:hover { border-color: rgba(197, 255, 74, .4); }
+.life__card:hover img { transform: scale(1.06); }
+.life__card figcaption {
+  position: absolute; left: var(--s3); bottom: var(--s3); font-size: 12px; line-height: 16px; padding: var(--s1) var(--s3); border-radius: 999px;
+  background: rgba(0, 0, 0, .6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--text);
+}
+.life__ig {
+  display: grid; align-content: center; justify-items: start; gap: var(--s3); padding: var(--s6);
+  background: var(--bg-2); border: 1px dashed var(--line);
+}
+.life__ig > i { font-size: 48px; color: var(--acc); }
+.life__ig-t { font-size: 30px; line-height: 36px; font-weight: 600; letter-spacing: -0.02em; }
+.life__ig-go {
+  margin-top: var(--s4); width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--acc); color: var(--acc-ink); font-size: 24px; transition: transform .7s var(--ease);
+}
+.life__ig:hover { border-color: var(--acc); }
+.life__ig:hover .life__ig-go { transform: rotate(45deg) scale(1.08); }
+
+.life.is-pinned { padding: 0; }
+.life.is-pinned .life__sticky { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+.life.is-pinned .life__track { gap: var(--s8); overflow: visible; scroll-snap-type: none; width: max-content; padding-right: 30vw; }
+.life.is-pinned .life__card { width: 340px; }
+.life.is-pinned .life__card--wide { width: 520px; }
+.life.is-pinned .life__head .lead { margin-bottom: var(--s6); }
+
+@media (max-width: 1000px) {
+  .hero__layout { grid-template-columns: 1fr; gap: var(--s7); }
+  .portrait { order: -1; width: min(300px, 70vw); }
+  .portrait__chip--a { left: auto; right: -34%; top: 10%; }
+  .portrait__chip--b { right: -30%; top: 48%; }
+  .portrait__chip--c { left: auto; right: -26%; bottom: 10%; }
+  .about__grid { grid-template-columns: 1fr; gap: var(--s9); }
+  .about__photo { max-width: 440px; }
+}
+@media (max-width: 560px) {
+  .portrait { width: 200px; }
+  .portrait__chip--b, .portrait__chip--c { display: none; }
+  .portrait__chip--a { right: -60%; top: auto; bottom: 18%; }
+  .about__facts { gap: var(--s2); }
+  .about__facts li { padding: var(--s3); }
+  .about__facts b { font-size: 30px; line-height: 36px; }
+  .about__facts span { font-size: 12px; line-height: 16px; }
+  .about__photo::before { inset: var(--s4) calc(var(--s3) * -1) calc(var(--s3) * -1) var(--s4); }
+}
+
+@media (min-width: 1001px) { .hero__layout .hero__title { font-size: 60px; } }
