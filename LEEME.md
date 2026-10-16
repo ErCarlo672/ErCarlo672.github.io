@@ -1,16 +1,17 @@
 # carlos.dev · Web personal
 
-Web estática (HTML + CSS + JS, sin dependencias ni build). Sube la carpeta tal cual a Hostinger, Netlify, Vercel o GitHub Pages.
+Web estática (HTML + CSS + JS, sin dependencias ni build).
+
+Publicada en **https://ercarlo672.github.io** con GitHub Pages: cada `git push` a `main` la actualiza en un minuto.
 
 ## Qué tienes que cambiar (busca `EDITAR` en los archivos)
 
-Email, GitHub, LinkedIn e Instagram ya son los reales. Queda pendiente:
+Email, redes, URL canónica e imagen para compartir ya están configurados. Queda pendiente:
 
 | Dónde | Qué |
 |---|---|
-| `index.html` → `<head>` | Cuando tengas dominio, añade `<link rel="canonical">` y `og:image` con la URL completa |
+| `index.html` → `<head>` | Si compras un dominio propio, cambia `ercarlo672.github.io` por él (canonical, og y twitter) |
 | `privacidad.html` | Tus datos fiscales si facturas como autónomo |
-| `assets/og.png` | Imagen de 1200×630 para cuando compartan tu web (aún no existe) |
 
 Textos en inglés: diccionario `EN` al principio de `main.js`. El español se lee directamente del HTML.
 
