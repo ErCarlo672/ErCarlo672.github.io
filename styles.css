@@ -297,6 +297,9 @@ html[lang="es"] .nav__lang [data-lang="es"], html[lang="en"] .nav__lang [data-la
   transform-style: preserve-3d; transition: transform .8s var(--ease), box-shadow .8s var(--ease);
   box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .9);
 }
+a.project__frame { display: block; color: inherit; }
+.project__live { justify-self: start; margin-top: var(--s2); color: var(--text); }
+.project__live:hover i { transform: translate(2px, -2px); }
 .project__frame:hover { box-shadow: 0 40px 80px -30px rgba(197, 255, 74, .18); }
 .project__bar { display: flex; align-items: center; gap: var(--s2); padding: var(--s3) var(--s4); border-bottom: 1px solid var(--line); }
 .project__bar i, .editor__bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--bg-4); }
