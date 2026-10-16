@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carlos Salguero · Desarrollador web full-stack</title>
+  <meta name="description" content="Desarrollador full-stack en España. Diseño, programo y lanzo webs y aplicaciones rápidas con React, Next.js, Node y Supabase. Presupuesto cerrado y 30 días de soporte.">
+  <meta name="theme-color" content="#000000">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Carlos Salguero · Desarrollador web full-stack">
+  <meta property="og:description" content="Webs y aplicaciones rápidas, hechas a medida, de la interfaz a la base de datos.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg?v=20261016" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lib/phosphor/style.css?v=20261016">
+  <link rel="stylesheet" href="styles.css?v=20261016">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Carlos Salguero","jobTitle":"Desarrollador web full-stack","email":"carlossalguero09@gmail.com","sameAs":["https://github.com/ErCarlo672","https://www.linkedin.com/in/carlos-salguero-466617304/","https://www.instagram.com/caarloos_23/"],"knowsAbout":["React","Next.js","Node.js","Supabase","PostgreSQL","SEO técnico"]}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
+
+  <!-- Splash con doble red de seguridad (CSS 2.6s + JS) -->
+  <div class="splash" id="splash" aria-hidden="true">
+    <div class="splash__term">
+      <p><span class="c-acc">~</span> npm run carlos</p>
+      <p class="splash__line">compilando ideas<span class="splash__dots"></span></p>
+      <p class="splash__ok"><i class="ph ph-check"></i> listo en <span id="splashMs">412</span> ms</p>
+    </div>
+  </div>
+
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div></div>
+
+  <!-- Navegación isla flotante -->
+  <header class="nav" id="nav">
+    <a href="#top" class="nav__logo" aria-label="Inicio"><span class="c-acc">&lt;</span>cs<span class="c-acc">/&gt;</span></a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#servicios" data-i18n="nav.services">Servicios</a>
+      <a href="#proyectos" data-i18n="nav.work">Proyectos</a>
+      <a href="#proceso" data-i18n="nav.process">Proceso</a>
+      <a href="#stack">Stack</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <button class="nav__k" id="openPalette" aria-label="Abrir paleta de comandos"><i class="ph ph-command"></i><span>K</span></button>
+    <button class="nav__lang" id="langToggle" aria-label="Cambiar idioma"><span data-lang="es">ES</span><span data-lang="en">EN</span></button>
+    <a href="#contacto" class="btn btn--sm btn--acc magnetic" data-i18n="nav.cta">Hablemos</a>
+    <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
+  </header>
+
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav class="menu__links" aria-label="Móvil">
+      <a href="#servicios" data-i18n="nav.services">Servicios</a>
+      <a href="#proyectos" data-i18n="nav.work">Proyectos</a>
+      <a href="#proceso" data-i18n="nav.process">Proceso</a>
+      <a href="#stack">Stack</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacto" data-i18n="nav.cta">Hablemos</a>
+    </nav>
+    <p class="menu__foot mono">carlossalguero09@gmail.com</p>
+  </div>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+      <div class="hero__grid" aria-hidden="true"></div>
+      <div class="hero__glow" id="heroGlow" aria-hidden="true"></div>
+      <div class="wrap hero__inner">
+        <p class="badge reveal"><span class="pulse"></span><span data-i18n="hero.badge">Disponible para 2 proyectos nuevos en noviembre</span></p>
+        <h1 class="hero__title reveal" data-i18n-html="hero.title">Construyo webs rápidas<br>que convierten visitas<br>en clientes.</h1>
+        <p class="hero__sub reveal" data-i18n="hero.sub">Soy Carlos, desarrollador full-stack. Diseño, programo y lanzo tu proyecto completo, de la interfaz a la base de datos, sin intermediarios y con un presupuesto cerrado.</p>
+        <p class="hero__type mono reveal" aria-live="polite"><span class="c-acc">$</span> <span data-i18n="hero.typePrefix">especialidad</span>: <span id="typed" class="typed">Next.js y React</span><span class="caret"></span></p>
+        <div class="hero__ctas reveal">
+          <a href="#contacto" class="btn btn--acc btn--lg magnetic"><span data-i18n="hero.cta">Cuéntame tu proyecto</span><i class="ph ph-arrow-right"></i></a>
+          <a href="#proyectos" class="link-arrow"><span data-i18n="hero.cta2">Ver proyectos</span><i class="ph ph-arrow-down"></i></a>
+        </div>
+        <ul class="stats reveal">
+          <li><b class="mono"><span data-count="1" data-prefix="&lt; ">&lt; 1</span> s</b><span data-i18n="stats.load">carga objetivo</span></li>
+          <li><b class="mono"><span data-count="95">95</span>+</b><span data-i18n="stats.lh">en Lighthouse</span></li>
+          <li><b class="mono"><span data-count="24">24</span> h</b><span data-i18n="stats.reply">tiempo de respuesta</span></li>
+          <li><b class="mono"><span data-count="30">30</span> d</b><span data-i18n="stats.support">de soporte incluido</span></li>
+        </ul>
+      </div>
+      <a href="#servicios" class="hero__scroll mono" aria-label="Bajar"><span>scroll</span><i></i></a>
+    </section>
+
+    <!-- MARQUEE STACK -->
+    <div class="marquee" aria-label="Tecnologías">
+      <div class="marquee__track">
+        <span>React</span><i>✦</i><span>Next.js</span><i>✦</i><span>TypeScript</span><i>✦</i><span>Node.js</span><i>✦</i><span>Supabase</span><i>✦</i><span>PostgreSQL</span><i>✦</i><span>Tailwind</span><i>✦</i><span>Stripe</span><i>✦</i><span>Astro</span><i>✦</i><span>Vercel</span><i>✦</i>
+        <span aria-hidden="true">React</span><i>✦</i><span aria-hidden="true">Next.js</span><i>✦</i><span aria-hidden="true">TypeScript</span><i>✦</i><span aria-hidden="true">Node.js</span><i>✦</i><span aria-hidden="true">Supabase</span><i>✦</i><span aria-hidden="true">PostgreSQL</span><i>✦</i><span aria-hidden="true">Tailwind</span><i>✦</i><span aria-hidden="true">Stripe</span><i>✦</i><span aria-hidden="true">Astro</span><i>✦</i><span aria-hidden="true">Vercel</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- SERVICIOS (bento) -->
+    <section class="section" id="servicios">
+      <div class="wrap">
+        <p class="label mono reveal" data-scramble>01 / <span data-i18n="services.label">servicios</span></p>
+        <h2 class="h2 reveal" data-i18n="services.title">Todo lo que tu proyecto necesita, en una sola persona.</h2>
+        <div class="bento">
+          <article class="card card--wide spot reveal">
+            <i class="ph ph-stack card__icon"></i>
+            <h3 data-i18n="s2.t">Aplicaciones full-stack</h3>
+            <p data-i18n="s2.d">Paneles, SaaS, áreas de clientes y reservas online con Next.js, Node y Supabase. Autenticación, pagos y despliegue incluidos.</p>
+            <div class="mini-term mono" aria-hidden="true">
+              <p><span class="c-mut">$</span> supabase db push</p>
+              <p class="c-ok">✓ 4 migraciones aplicadas</p>
+              <p><span class="c-mut">$</span> vercel --prod</p>
+              <p class="c-ok">✓ desplegado en 38 s</p>
+            </div>
+          </article>
+          <article class="card spot reveal">
+            <i class="ph ph-browsers card__icon"></i>
+            <h3 data-i18n="s1.t">Webs a medida</h3>
+            <p data-i18n="s1.d">Landings y webs corporativas diseñadas desde cero, con animaciones cuidadas y pensadas para captar clientes.</p>
+          </article>
+          <article class="card spot reveal">
+            <i class="ph ph-shopping-bag-open card__icon"></i>
+            <h3 data-i18n="s3.t">Tiendas online</h3>
+            <p data-i18n="s3.d">E-commerce con Shopify o a medida con Stripe, para que comprar sea fácil también desde el móvil.</p>
+          </article>
+          <article class="card card--wide card--gauge spot reveal">
+            <div>
+              <i class="ph ph-gauge card__icon"></i>
+              <h3 data-i18n="s4.t">Rendimiento y SEO técnico</h3>
+              <p data-i18n="s4.d">Audito tu web actual, arreglo los Core Web Vitals y la dejo lista para que Google la entienda. Más rápida significa más ventas.</p>
+            </div>
+            <div class="gauge" aria-hidden="true">
+              <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="gauge__bg"/><circle cx="60" cy="60" r="52" class="gauge__fg" id="gaugeFg"/></svg>
+              <b class="mono" id="gaugeNum">0</b>
+              <span class="mono">performance</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAGLINE REVEAL -->
+    <section class="tagline">
+      <div class="wrap">
+        <p class="tagline__text" id="tagline" data-i18n="tagline">No vendo plantillas. Escribo cada línea pensando en quién la va a usar y en lo que tu negocio necesita que pase después del clic.</p>
+      </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section class="section" id="proyectos">
+      <div class="wrap">
+        <p class="label mono reveal" data-scramble>02 / <span data-i18n="work.label">proyectos</span></p>
+        <h2 class="h2 reveal" data-i18n="work.title">Trabajo reciente.</h2>
+        <div class="projects">
+          <article class="project reveal">
+            <div class="project__frame tilt">
+              <div class="project__bar"><i></i><i></i><i></i><span class="mono">desatranquesjaen.com</span></div>
+              <img src="assets/shots/desatranques-jaen-web.webp?v=20261016" alt="Página de inicio de Desatranques Jaén con el titular Desatascos sin obras, sin esperas" loading="lazy" width="1200" height="750">
+            </div>
+            <div class="project__meta">
+              <p class="mono c-mut">2026 · <span data-i18n="p1.type">Web corporativa + SEO local</span></p>
+              <h3>Desatranques Jaén</h3>
+              <p data-i18n="p1.d">Web para una empresa de desatascos con urgencias 24 h. Llamada en un toque desde el móvil, páginas por servicio y zona, y SEO local para Jaén, Úbeda y provincia.</p>
+              <ul class="tags mono"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>SEO local</li></ul>
+            </div>
+          </article>
+          <article class="project project--alt reveal">
+            <div class="project__frame tilt">
+              <div class="project__bar"><i></i><i></i><i></i><span class="mono">marbellamaintenance.com</span></div>
+              <img src="assets/shots/marbella-maintenance.webp?v=20261016" alt="Página de inicio de Marbella Maintenance con una piscina al anochecer" loading="lazy" width="1200" height="750">
+            </div>
+            <div class="project__meta">
+              <p class="mono c-mut">2026 · <span data-i18n="p2.type">Web multipágina + app</span></p>
+              <h3>Marbella Maintenance</h3>
+              <p data-i18n="p2.d">Plataforma para una empresa de mantenimiento premium en Marbella. Bilingüe, con reserva de citas online y área privada de clientes conectada a Supabase.</p>
+              <ul class="tags mono"><li>Supabase</li><li>Auth</li><li>JavaScript</li><li>i18n</li></ul>
+            </div>
+          </article>
+          <a href="#contacto" class="project-next spot reveal">
+            <span class="mono c-acc">03 / ???</span>
+            <h3 data-i18n="p3.t">Tu proyecto puede ser el siguiente.</h3>
+            <p data-i18n="p3.d">Cuéntame qué necesitas y en 24 h tienes una propuesta con precio y fechas.</p>
+            <span class="project-next__go"><i class="ph ph-arrow-up-right"></i></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section class="section" id="proceso">
+      <div class="wrap">
+        <p class="label mono reveal" data-scramble>03 / <span data-i18n="process.label">proceso</span></p>
+        <h2 class="h2 reveal" data-i18n="process.title">Cuatro pasos. Cero sorpresas.</h2>
+        <ol class="steps" id="steps">
+          <li class="step reveal"><span class="step__n mono">01</span><div><h3 data-i18n="st1.t">Llamada de descubrimiento</h3><p data-i18n="st1.d">30 minutos para entender tu negocio y tus objetivos. En 48 h recibes una propuesta con precio cerrado.</p></div></li>
+          <li class="step reveal"><span class="step__n mono">02</span><div><h3 data-i18n="st2.t">Diseño y prototipo</h3><p data-i18n="st2.d">Ves tu web antes de programarla. Ajustamos juntos hasta que encaje con tu marca.</p></div></li>
+          <li class="step reveal"><span class="step__n mono">03</span><div><h3 data-i18n="st3.t">Desarrollo con entregas semanales</h3><p data-i18n="st3.d">Cada viernes tienes una URL de prueba para ver el avance real, no solo informes.</p></div></li>
+          <li class="step reveal"><span class="step__n mono">04</span><div><h3 data-i18n="st4.t">Lanzamiento y soporte</h3><p data-i18n="st4.d">Publico tu web, configuro dominio y analítica, y te acompaño 30 días con soporte incluido.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- STACK -->
+    <section class="section" id="stack">
+      <div class="wrap stack">
+        <div>
+          <p class="label mono reveal" data-scramble>04 / stack</p>
+          <h2 class="h2 reveal" data-i18n="stack.title">Herramientas modernas, elegidas para durar.</h2>
+          <p class="lead reveal" data-i18n="stack.d">Uso tecnologías probadas en producción por miles de empresas. Tu web será rápida, segura y fácil de mantener por cualquier desarrollador en el futuro.</p>
+          <ul class="guarantees reveal">
+            <li><i class="ph ph-seal-check"></i><span data-i18n="g1">Presupuesto cerrado, sin costes ocultos</span></li>
+            <li><i class="ph ph-key"></i><span data-i18n="g2">El código y el dominio son tuyos</span></li>
+            <li><i class="ph ph-device-mobile"></i><span data-i18n="g3">Diseñado primero para móvil</span></li>
+            <li><i class="ph ph-lifebuoy"></i><span data-i18n="g4">30 días de soporte tras el lanzamiento</span></li>
+          </ul>
+        </div>
+        <div class="editor reveal" aria-label="Ficha técnica en formato código">
+          <div class="editor__bar"><i></i><i></i><i></i><span class="mono">carlos.ts</span></div>
+          <pre class="editor__code mono" id="code"><code><span class="k">const</span> <span class="v">carlos</span> = {
+  role: <span class="s">"Full-stack developer"</span>,
+  location: <span class="s">"España · remoto"</span>,
+  frontend: [<span class="s">"React"</span>, <span class="s">"Next.js"</span>, <span class="s">"TypeScript"</span>, <span class="s">"Tailwind"</span>],
+  backend: [<span class="s">"Node.js"</span>, <span class="s">"Supabase"</span>, <span class="s">"PostgreSQL"</span>],
+  tools: [<span class="s">"Git"</span>, <span class="s">"Vercel"</span>, <span class="s">"Stripe"</span>, <span class="s">"Figma"</span>],
+  languages: [<span class="s">"es"</span>, <span class="s">"en"</span>],
+  available: <span class="n">true</span>,
+};</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="wrap faq">
+        <div>
+          <p class="label mono reveal" data-scramble>05 / faq</p>
+          <h2 class="h2 reveal" data-i18n="faq.title">Preguntas frecuentes.</h2>
+        </div>
+        <div class="faq__list">
+          <details class="reveal"><summary><span data-i18n="q1">¿Cuánto cuesta una web?</span><i class="ph ph-plus"></i></summary><p data-i18n="a1">Una landing parte de 890 €, una web corporativa de 1.790 € y una aplicación a medida se presupuesta tras la primera llamada. Siempre con precio cerrado.</p></details>
+          <details class="reveal"><summary><span data-i18n="q2">¿Cuánto tardas en entregarla?</span><i class="ph ph-plus"></i></summary><p data-i18n="a2">Una landing, entre 2 y 3 semanas. Una web completa, entre 4 y 6. Te doy fechas concretas en la propuesta.</p></details>
+          <details class="reveal"><summary><span data-i18n="q3">¿Podré editar los contenidos yo mismo?</span><i class="ph ph-plus"></i></summary><p data-i18n="a3">Sí. Si lo necesitas, integro un panel de gestión sencillo y te grabo un vídeo explicando cómo usarlo.</p></details>
+          <details class="reveal"><summary><span data-i18n="q4">¿Te encargas del dominio y el hosting?</span><i class="ph ph-plus"></i></summary><p data-i18n="a4">Sí. Lo configuro todo a tu nombre para que siempre sea tuyo, aunque algún día cambies de proveedor.</p></details>
+          <details class="reveal"><summary><span data-i18n="q5">¿Trabajas con clientes fuera de España?</span><i class="ph ph-plus"></i></summary><p data-i18n="a5">Sí. Trabajo en remoto, en español e inglés, y adapto las llamadas a tu zona horaria.</p></details>
+          <details class="reveal"><summary><span data-i18n="q6">¿Qué pasa después del lanzamiento?</span><i class="ph ph-plus"></i></summary><p data-i18n="a6">Tienes 30 días de soporte incluido. Después puedes contratar mantenimiento mensual o pedirme cambios puntuales.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="section contact" id="contacto">
+      <div class="wrap contact__inner">
+        <div>
+          <p class="label mono reveal" data-scramble>06 / <span data-i18n="contact.label">contacto</span></p>
+          <h2 class="contact__title reveal" data-i18n-html="contact.title">¿Tienes una idea?<br>Hagámosla real.</h2>
+          <p class="lead reveal" data-i18n="contact.d">Respondo en menos de 24 h con una primera valoración. Sin compromiso.</p>
+          
+          <button class="email reveal mono" id="copyEmail" data-email="carlossalguero09@gmail.com"><i class="ph ph-envelope-simple"></i><span>carlossalguero09@gmail.com</span><i class="ph ph-copy email__icon"></i></button>
+          <p class="clock mono reveal"><span class="pulse"></span><span data-i18n="contact.time">Mi hora</span>: <span id="clock">--:--</span> · Madrid</p>
+          
+          <ul class="socials reveal">
+            <li><a href="https://github.com/ErCarlo672" target="_blank" rel="noopener" aria-label="GitHub" class="magnetic"><i class="ph ph-github-logo"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/carlos-salguero-466617304/" target="_blank" rel="noopener" aria-label="LinkedIn" class="magnetic"><i class="ph ph-linkedin-logo"></i></a></li>
+            <li><a href="https://www.instagram.com/caarloos_23/" target="_blank" rel="noopener" aria-label="Instagram" class="magnetic"><i class="ph ph-instagram-logo"></i></a></li>
+          </ul>
+        </div>
+        <form class="form reveal" id="form" novalidate>
+          <div class="field"><label for="f-name" data-i18n="f.name">Nombre</label><input id="f-name" name="name" autocomplete="name" required><p class="err" data-i18n="f.errName">Escribe tu nombre.</p></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="err" data-i18n="f.errEmail">Revisa el email, parece incompleto.</p></div>
+          <fieldset class="field">
+            <legend data-i18n="f.type">Tipo de proyecto</legend>
+            <div class="chips">
+              <label><input type="radio" name="type" value="Landing" checked><span>Landing</span></label>
+              <label><input type="radio" name="type" value="Web"><span data-i18n="f.t2">Web corporativa</span></label>
+              <label><input type="radio" name="type" value="App"><span data-i18n="f.t3">Aplicación</span></label>
+              <label><input type="radio" name="type" value="Shop"><span data-i18n="f.t4">Tienda</span></label>
+            </div>
+          </fieldset>
+          <div class="field"><label for="f-msg" data-i18n="f.msg">Cuéntame un poco más</label><textarea id="f-msg" name="message" rows="4" required></textarea><p class="err" data-i18n="f.errMsg">Añade al menos una frase sobre tu proyecto.</p></div>
+          <button class="btn btn--acc btn--lg magnetic" type="submit"><span data-i18n="f.send">Enviar mensaje</span><i class="ph ph-paper-plane-tilt"></i></button>
+          <p class="form__ok" id="formOk" role="status" data-i18n="f.ok">Se ha abierto tu cliente de correo con el mensaje preparado. Te respondo en menos de 24 h.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <p class="mono">© <span id="year">2026</span> Carlos Salguero</p>
+      <p class="mono c-mut" data-i18n="footer.made">Hecho a mano, sin plantillas.</p>
+      <nav class="footer__legal" aria-label="Legal">
+        <a href="privacidad.html" data-i18n="footer.privacy">Privacidad</a>
+        <a href="#top" class="mono"><i class="ph ph-arrow-up"></i> top</a>
+      </nav>
+    </div>
+    <p class="footer__big" aria-hidden="true">carlos<span class="c-acc">.</span>dev</p>
+  </footer>
+
+  <!-- Paleta de comandos (Ctrl/⌘ + K) -->
+  <div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Paleta de comandos" hidden>
+    <div class="palette__box">
+      <div class="palette__search"><i class="ph ph-magnifying-glass"></i><input id="paletteInput" placeholder="Escribe un comando…" data-i18n-ph="pal.ph" autocomplete="off"><kbd class="mono">esc</kbd></div>
+      <ul class="palette__list" id="paletteList" role="listbox"></ul>
+    </div>
+  </div>
+
+  <div class="toast mono" id="toast" role="status"></div>
+
+  <script src="main.js?v=20261016" defer></script>
+</body>
+</html>
