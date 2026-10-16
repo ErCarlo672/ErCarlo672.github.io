@@ -48,9 +48,6 @@
     'about.p1': 'I am a full-stack developer working with real businesses: padel clubs, nail studios, service companies. I like sitting down with the owner, understanding what they need and turning it into a website that works for them.',
     'about.p2': 'With me you are not talking to an agency or a salesperson. You talk to the person who designs and codes every line of your project, start to finish.',
     'about.f1': 'sites published in 2026', 'about.f2': 'cities with clients', 'about.f3': 'person, start to finish', 'about.cta': "Let's grab a coffee",
-    'life.label': 'away from the screen', 'life.title': 'Beyond the code.',
-    'life.d': 'The best ideas never come from the desk. They come from a good conversation, a walk or a dinner with a view.',
-    'life.c1': 'out for a walk', 'life.c2': 'nights by the sea', 'life.c3': 'good company', 'life.c4': 'long after dinner talks', 'life.ig': 'More on Instagram',
     'p3.t': 'Your project could be next.', 'p3.d': 'Tell me what you need and within 24 h you get a proposal with price and dates.',
     'process.label': 'process', 'process.title': 'Four steps. Zero surprises.',
     'st1.t': 'Discovery call', 'st1.d': '30 minutes to understand your business and goals. Within 48 h you get a fixed price proposal.',
@@ -535,44 +532,6 @@
     ], { duration: 1600, delay: 900, easing: 'cubic-bezier(0.32, 0.72, 0, 1)', fill: 'backwards' });
   }
 
-  /* ---------------- Galería personal fijada con scroll ---------------- */
-  function initLife() {
-    var sec = $('#vida'), track = $('#lifeTrack'); if (!sec || !track) return;
-    var cards = $$('.life__card', track);
-    var mq = window.matchMedia('(min-width: 900px)');
-    var dist = 0, ticking = false;
-    function measure() {
-      if (!mq.matches) {
-        sec.classList.remove('is-pinned'); sec.style.height = ''; track.style.transform = '';
-        cards.forEach(function (c) { c.style.transform = ''; });
-        return;
-      }
-      sec.classList.add('is-pinned');
-      dist = Math.max(0, track.scrollWidth - window.innerWidth);
-      sec.style.height = (window.innerHeight + dist) + 'px';
-      update();
-    }
-    function update() {
-      ticking = false;
-      if (!mq.matches) return;
-      var r = sec.getBoundingClientRect();
-      var p = Math.max(0, Math.min(1, -r.top / Math.max(1, dist)));
-      track.style.transform = 'translate3d(' + (-p * dist).toFixed(1) + 'px,0,0)';
-      var mid = window.innerWidth / 2;
-      cards.forEach(function (c) {
-        var cr = c.getBoundingClientRect();
-        var d = (cr.left + cr.width / 2 - mid) / mid; // -1 izquierda, 1 derecha
-        d = Math.max(-1.5, Math.min(1.5, d));
-        c.style.transform = 'perspective(1400px) rotateY(' + (-d * 22).toFixed(2) + 'deg) translateZ(' + (-Math.abs(d) * 120).toFixed(1) + 'px) translateY(' + (Math.abs(d) * 18).toFixed(1) + 'px)';
-      });
-    }
-    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(measure, 150); });
-    if (mq.addEventListener) mq.addEventListener('change', measure);
-    $$('img', track).forEach(function (img) { if (!img.complete) img.addEventListener('load', measure); });
-    measure();
-  }
-
   function initConsole() {
     if (window.console) console.log('%c<cs/>%c  ¿Curioseando el código? Me caes bien. Escríbeme: ' + EMAIL, 'background:#C5FF4A;color:#0B0F00;padding:4px 8px;border-radius:4px;font-weight:700', 'color:#9B9B9B');
   }
@@ -594,7 +553,6 @@
     safe(initContact, 'contact');
     safe(initPalette, 'palette');
     safe(initPortrait, 'portrait');
-    safe(initLife, 'life');
     safe(initConsole, 'console');
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
