@@ -672,3 +672,121 @@ body:not(.is-ready) .hero__title.split .wd { opacity: 0; filter: blur(10px); tra
   .dock a { padding: var(--s2) var(--s3); }
   .toast { bottom: 80px; }
 }
+
+/* ==========================================================
+   Showreel: vídeo cinematográfico interactivo
+   ========================================================== */
+.hero__reel { display: inline-flex; align-items: center; gap: var(--s3); color: var(--text); font-weight: 500; }
+.hero__reel-btn {
+  position: relative; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid var(--line); background: rgba(24, 24, 24, .7); font-size: 18px; color: var(--acc);
+  transition: transform .7s var(--ease), border-color .7s var(--ease), background-color .7s var(--ease);
+}
+.hero__reel-btn::after { content: ""; position: absolute; inset: -1px; border-radius: 50%; border: 1px solid var(--acc); animation: ping 2.4s var(--ease) infinite; opacity: .5; }
+.hero__reel:hover .hero__reel-btn { transform: scale(1.08); border-color: var(--acc); background: rgba(197, 255, 74, .1); }
+
+.reel { position: relative; padding: var(--s11) 0; }
+.reel__head { margin-bottom: var(--s7); }
+.reel__head .h2 { margin-bottom: 0; }
+.reel__stage { position: relative; width: min(1200px, calc(100% - 2 * var(--s5))); margin-inline: auto; perspective: 1600px; }
+.reel__ambient {
+  position: absolute; inset: 4% 2%; width: 96%; height: 92%; z-index: 0; pointer-events: none;
+  filter: blur(64px) saturate(1.6); opacity: .5; transform: scale(1.08); transition: opacity 1s var(--ease);
+}
+.reel__frame {
+  position: relative; z-index: 1; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; background: #000;
+  border: 1px solid rgba(255, 255, 255, .1); outline: none;
+  box-shadow: 0 80px 160px -60px rgba(0, 0, 0, 1), 0 0 0 1px rgba(197, 255, 74, .06);
+  transform-origin: 50% 0;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(var(--sc, 1));
+  transition: border-color .7s var(--ease), box-shadow .7s var(--ease);
+  will-change: transform;
+}
+.reel__frame:focus-visible { border-color: var(--acc); }
+.reel__frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.reel__shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, .7)); opacity: 1; transition: opacity .7s var(--ease); }
+
+/* Botón grande central */
+.reel__play {
+  position: absolute; inset: 0; z-index: 2; display: grid; place-content: center; justify-items: center; gap: var(--s4);
+  background: rgba(0, 0, 0, .28); transition: opacity .7s var(--ease), visibility 0s, background-color .7s var(--ease);
+}
+.reel__play:hover { background: rgba(0, 0, 0, .12); }
+.reel__play-btn {
+  position: relative; width: 112px; height: 112px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--acc); color: var(--acc-ink); font-size: 40px; box-shadow: 0 0 64px rgba(197, 255, 74, .45);
+  transition: transform .8s var(--ease);
+}
+.reel__play-btn i { margin-left: 6px; }
+.reel__play:hover .reel__play-btn { transform: scale(1.1); }
+.reel__play:active .reel__play-btn { transform: scale(.98); }
+.reel__play-ring { position: absolute; inset: -12px; border-radius: 50%; border: 1px solid rgba(197, 255, 74, .6); animation: ping 2.4s var(--ease) infinite; }
+.reel__play-t {
+  font-size: 14px; line-height: 20px; color: var(--text); padding: var(--s1) var(--s3); border-radius: 999px;
+  background: rgba(0, 0, 0, .6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.reel.is-sound .reel__play { opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s .5s; }
+
+/* Barra de controles */
+.reel__ui {
+  position: absolute; left: var(--s4); right: var(--s4); bottom: var(--s4); z-index: 3;
+  display: flex; align-items: center; gap: var(--s2); padding: var(--s2) var(--s3); border-radius: 999px;
+  background: rgba(0, 0, 0, .55); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, .1);
+  opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease);
+}
+.reel.is-sound .reel__frame:hover .reel__ui, .reel.is-sound .reel__frame:focus-within .reel__ui, .reel.is-sound.is-paused .reel__ui, .reel.is-sound.is-touch .reel__ui { opacity: 1; transform: none; }
+.reel__ui button { width: 36px; height: 36px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: var(--text); transition: background-color .5s var(--ease), color .5s var(--ease); }
+.reel__ui button:hover { background: rgba(255, 255, 255, .1); color: var(--acc); }
+.reel__bar { position: relative; flex: 1; height: 24px; cursor: pointer; outline: none; }
+.reel__bar::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 4px; margin-top: -2px; border-radius: 4px; background: rgba(255, 255, 255, .18); }
+.reel__fill { position: absolute; left: 0; top: 50%; height: 4px; margin-top: -2px; width: 0; border-radius: 4px; background: var(--acc); box-shadow: 0 0 12px var(--acc); }
+.reel__fill::after { content: ""; position: absolute; right: -6px; top: 50%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: var(--acc); transform: scale(0); transition: transform .4s var(--ease); }
+.reel__bar:hover .reel__fill::after, .reel__bar:focus-visible .reel__fill::after { transform: scale(1); }
+.reel__bar:focus-visible::before { box-shadow: 0 0 0 2px var(--acc); }
+.reel__tick { position: absolute; top: 50%; width: 2px; height: 8px; margin-top: -4px; background: rgba(0, 0, 0, .7); pointer-events: none; }
+.reel__time { font-size: 12px; line-height: 16px; color: var(--muted); white-space: nowrap; min-width: 84px; text-align: right; }
+
+/* Capítulos */
+.reel__chapters {
+  list-style: none; margin: var(--s6) auto 0; padding: 0; width: min(1200px, calc(100% - 2 * var(--s5)));
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--s2);
+}
+.reel__chapters button {
+  width: 100%; display: grid; gap: var(--s1); justify-items: start; text-align: left; padding: var(--s3); border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, .06); background: var(--bg-2); color: var(--muted); font-size: 12px; line-height: 16px;
+  position: relative; overflow: hidden;
+  transition: border-color .6s var(--ease), color .6s var(--ease), background-color .6s var(--ease), transform .6s var(--ease);
+}
+.reel__chapters button b { font-weight: 500; color: var(--dim); transition: color .6s var(--ease); }
+.reel__chapters button::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: calc(var(--cp, 0) * 100%); background: var(--acc); }
+.reel__chapters button:hover { color: var(--text); transform: translateY(-2px); }
+.reel__chapters button.is-on { color: var(--text); border-color: rgba(197, 255, 74, .35); background: var(--bg-3); }
+.reel__chapters button.is-on b { color: var(--acc); }
+
+/* Escritorio con JS: el vídeo se fija y se "aplana" con el scroll */
+.reel.is-pinned { padding: 0; height: 200vh; }
+.reel.is-pinned .reel__pin { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+.reel.is-pinned .reel__head { margin-bottom: var(--s5); }
+.reel.is-pinned .reel__stage { width: min(calc((100vh - 300px) * 16 / 9), calc(100% - 2 * var(--s5)), 1200px); }
+.reel.is-pinned .reel__chapters { width: min(calc((100vh - 300px) * 16 / 9), calc(100% - 2 * var(--s5)), 1200px); margin-top: var(--s4); }
+
+/* Cursor sobre el vídeo */
+@media (pointer: fine) {
+  .cursor.is-reel .cursor__ring { width: 88px; height: 88px; margin: -44px 0 0 -44px; background: rgba(197, 255, 74, .9); border-color: var(--acc); }
+  .cursor.is-reel .cursor__ring::after { content: "play"; position: absolute; inset: 0; display: grid; place-items: center; font: 500 12px/16px var(--mono); color: var(--acc-ink); }
+  .cursor.is-reel.is-reel-pause .cursor__ring::after { content: "pausa"; }
+  .cursor.is-reel .cursor__dot { opacity: 0; }
+}
+
+/* Móvil: vídeo vertical tipo story */
+.reel--tall .reel__stage { width: min(380px, calc(100% - 2 * var(--s5))); }
+.reel--tall .reel__frame { aspect-ratio: 9 / 16; }
+@media (max-width: 900px) {
+  .reel__chapters { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 112px; overflow-x: auto; scrollbar-width: none; padding-bottom: var(--s2); }
+  .reel__chapters::-webkit-scrollbar { display: none; }
+  .reel__play-btn { width: 88px; height: 88px; font-size: 32px; }
+}
+@media (max-width: 560px) {
+  .reel__time { display: none; }
+  .reel__ui { left: var(--s2); right: var(--s2); bottom: var(--s2); }
+}

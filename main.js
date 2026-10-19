@@ -45,6 +45,8 @@
     'p7.type': 'Institutional website redesign',
     'p7.d': 'Concept redesign for the Andalusian Olympic Shooting Federation: 2026 calendar with filters and calendar export, live agendas for its 8 delegations connected to their WordPress, a 72-club directory and a step-by-step insurance guide.',
     'work.live': 'See it live',
+    'hero.reel': 'Watch the video', 'reel.label': 'showreel · 24 s', 'reel.title': '24 seconds that sum it all up.', 'reel.play': 'Watch with sound',
+    'ch.1': 'Intro', 'ch.2': 'Performance', 'ch.3': 'Work', 'ch.4': 'Code', 'ch.6': 'Guarantees', 'ch.7': "Let's talk",
     'chip.a': '6 sites launched in 2026',
     'about.label': 'about me', 'about.title': "Hi, I'm Carlos.<br>The person behind your&nbsp;website.",
     'about.p1': 'I am a full-stack developer working with real businesses: padel clubs, nail studios, service companies. I like sitting down with the owner, understanding what they need and turning it into a website that works for them.',
@@ -80,13 +82,13 @@
       roles: ['Next.js y React', 'APIs con Node.js', 'Supabase y PostgreSQL', 'tiendas que venden', 'webs que cargan en < 1 s'],
       accWords: ['plantillas.', 'clic.'], copied: 'Email copiado', langSet: 'Idioma: español',
       mailSubject: 'Nuevo proyecto', none: 'Sin resultados',
-      cmds: { about: 'Sobre mí', insta: 'Abrir Instagram', services: 'Ir a servicios', work: 'Ver proyectos', process: 'Ver proceso', stack: 'Ver stack', faq: 'Preguntas frecuentes', contact: 'Contactar', email: 'Copiar email', lang: 'Switch to English', github: 'Abrir GitHub', top: 'Volver arriba' }
+      cmds: { reel: 'Ver el vídeo', about: 'Sobre mí', insta: 'Abrir Instagram', services: 'Ir a servicios', work: 'Ver proyectos', process: 'Ver proceso', stack: 'Ver stack', faq: 'Preguntas frecuentes', contact: 'Contactar', email: 'Copiar email', lang: 'Switch to English', github: 'Abrir GitHub', top: 'Volver arriba' }
     },
     en: {
       roles: ['Next.js & React', 'Node.js APIs', 'Supabase & PostgreSQL', 'stores that sell', 'sites that load in < 1 s'],
       accWords: ['templates.', 'click.'], copied: 'Email copied', langSet: 'Language: English',
       mailSubject: 'New project', none: 'No results',
-      cmds: { about: 'About me', insta: 'Open Instagram', services: 'Go to services', work: 'See work', process: 'See process', stack: 'See stack', faq: 'FAQ', contact: 'Get in touch', email: 'Copy email', lang: 'Cambiar a español', github: 'Open GitHub', top: 'Back to top' }
+      cmds: { reel: 'Watch the video', about: 'About me', insta: 'Open Instagram', services: 'Go to services', work: 'See work', process: 'See process', stack: 'See stack', faq: 'FAQ', contact: 'Get in touch', email: 'Copy email', lang: 'Cambiar a español', github: 'Open GitHub', top: 'Back to top' }
     }
   };
   var ES = {}; // se rellena leyendo el HTML original
@@ -413,6 +415,7 @@
       return [
         { i: 'ph-chat-circle-dots', t: c.contact, run: go('contacto') },
         { i: 'ph-copy', t: c.email, run: copyEmail },
+        { i: 'ph-play-circle', t: c.reel, run: function () { if (window.__playReel) window.__playReel(); } },
         { i: 'ph-user', t: c.about, run: go('sobre-mi') },
         { i: 'ph-squares-four', t: c.services, run: go('servicios') },
         { i: 'ph-folder-open', t: c.work, run: go('proyectos') },
@@ -474,6 +477,173 @@
       { opacity: 0, transform: 'perspective(1200px) rotateY(-35deg) rotateX(12deg) translateZ(-200px)' },
       { opacity: 1, transform: 'perspective(1200px) rotateY(0deg) rotateX(0deg) translateZ(0)' }
     ], { duration: 1600, delay: 900, easing: 'cubic-bezier(0.32, 0.72, 0, 1)', fill: 'backwards' });
+  }
+
+  /* ---------------- Showreel interactivo ---------------- */
+  function initReel() {
+    var sec = $('#showreel'), v = $('#reel'), frame = $('#reelFrame'); if (!sec || !v || !frame) return;
+    var stage = $('#reelStage'), amb = $('#reelAmbient'), actx = amb && amb.getContext ? amb.getContext('2d') : null;
+    var btnPlay = $('#reelPlay'), btnToggle = $('#reelToggle'), btnMute = $('#reelMute'), btnFs = $('#reelFs');
+    var bar = $('#reelBar'), fill = $('#reelFill'), time = $('#reelTime');
+    var chapters = $$('#reelChapters button'), cursor = $('.cursor');
+    var sound = false, visible = false, dur = 24;
+    var L = function (es, en) { return lang === 'en' ? en : es; };
+
+    // Vídeo vertical en móviles en vertical
+    if (window.matchMedia('(max-width: 700px) and (orientation: portrait)').matches) {
+      sec.classList.add('reel--tall');
+      v.poster = v.getAttribute('data-poster-tall');
+      v.querySelector('source').src = v.getAttribute('data-tall');
+      v.load();
+    }
+    if (!finePointer) sec.classList.add('is-touch');
+
+    function fmt(t) { t = Math.max(0, Math.floor(t)); return Math.floor(t / 60) + ':' + ('0' + (t % 60)).slice(-2); }
+    function setIcon(btn, name) { var i = btn.querySelector('i'); i.className = 'ph ' + name; }
+    function syncUi() {
+      setIcon(btnToggle, v.paused ? 'ph-play' : 'ph-pause');
+      btnToggle.setAttribute('aria-label', v.paused ? L('Reproducir', 'Play') : L('Pausar', 'Pause'));
+      setIcon(btnMute, v.muted ? 'ph-speaker-slash' : 'ph-speaker-high');
+      btnMute.setAttribute('aria-label', v.muted ? L('Activar sonido', 'Unmute') : L('Silenciar', 'Mute'));
+      sec.classList.toggle('is-paused', v.paused);
+      if (cursor) cursor.classList.toggle('is-reel-pause', sound && !v.paused);
+    }
+    function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+
+    // Vista previa silenciada: se reproduce sola al verse
+    new IntersectionObserver(function (en) {
+      visible = en[0].isIntersecting;
+      if (visible && !sound) tryPlay();
+      if (!visible && !v.paused) v.pause();
+      if (visible) ambient();
+    }, { threshold: 0.25 }).observe(frame);
+
+    function startSound(fromStart) {
+      sound = true; sec.classList.add('is-sound');
+      if (fromStart) v.currentTime = 0;
+      v.loop = false; v.muted = false; tryPlay(); syncUi();
+      try { frame.focus({ preventScroll: true }); } catch (e) {}
+    }
+    function backToPreview() {
+      sound = false; sec.classList.remove('is-sound');
+      v.muted = true; v.loop = true; v.currentTime = 0; if (visible) tryPlay(); syncUi();
+    }
+    function toggle() { if (!sound) { startSound(true); return; } if (v.paused) tryPlay(); else v.pause(); }
+
+    btnPlay.addEventListener('click', function (e) { e.stopPropagation(); startSound(true); });
+    btnToggle.addEventListener('click', function (e) { e.stopPropagation(); toggle(); });
+    btnMute.addEventListener('click', function (e) { e.stopPropagation(); v.muted = !v.muted; syncUi(); });
+    btnFs.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (document.fullscreenElement) { document.exitFullscreen(); return; }
+      if (frame.requestFullscreen) frame.requestFullscreen().catch(function () {});
+      else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+    });
+    frame.addEventListener('click', function (e) { if (e.target.closest('.reel__ui')) return; toggle(); });
+    frame.addEventListener('keydown', function (e) {
+      var k = e.key.toLowerCase();
+      if (k === ' ' || k === 'k') { e.preventDefault(); toggle(); }
+      else if (k === 'm') { v.muted = !v.muted; if (!sound) startSound(false); syncUi(); }
+      else if (k === 'f') btnFs.click();
+      else if (k === 'arrowright') v.currentTime = Math.min(dur, v.currentTime + 2);
+      else if (k === 'arrowleft') v.currentTime = Math.max(0, v.currentTime - 2);
+    });
+    v.addEventListener('play', syncUi); v.addEventListener('pause', syncUi);
+    v.addEventListener('ended', function () { if (sound) backToPreview(); });
+    v.addEventListener('loadedmetadata', function () { if (v.duration) dur = v.duration; });
+
+    // Progreso y capítulos
+    function progress() {
+      var t = v.currentTime || 0, k = Math.min(1, t / dur);
+      fill.style.width = (k * 100) + '%';
+      time.textContent = fmt(t) + ' / ' + fmt(dur);
+      bar.setAttribute('aria-valuenow', String(Math.round(t)));
+      chapters.forEach(function (b, i) {
+        var a = +b.getAttribute('data-t'), z = chapters[i + 1] ? +chapters[i + 1].getAttribute('data-t') : dur;
+        var on = t >= a && t < z;
+        b.classList.toggle('is-on', on);
+        b.style.setProperty('--cp', on ? ((t - a) / (z - a)).toFixed(3) : (t >= z ? '1' : '0'));
+      });
+    }
+    v.addEventListener('timeupdate', progress);
+    chapters.forEach(function (b) {
+      b.addEventListener('click', function () {
+        v.currentTime = +b.getAttribute('data-t');
+        if (!sound) startSound(false); else tryPlay();
+        progress();
+      });
+    });
+    function seekFrom(e) {
+      var r = bar.getBoundingClientRect();
+      v.currentTime = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * dur; progress();
+    }
+    var dragging = false;
+    bar.addEventListener('pointerdown', function (e) { e.stopPropagation(); dragging = true; bar.setPointerCapture(e.pointerId); seekFrom(e); });
+    bar.addEventListener('pointermove', function (e) { if (dragging) seekFrom(e); });
+    bar.addEventListener('pointerup', function () { dragging = false; });
+    bar.addEventListener('click', function (e) { e.stopPropagation(); });
+    bar.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); e.stopPropagation(); v.currentTime = Math.min(dur, v.currentTime + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); e.stopPropagation(); v.currentTime = Math.max(0, v.currentTime - 1); }
+    });
+
+    // Luz ambiente: los colores del vídeo se derraman detrás del marco
+    var ambOn = false;
+    function ambient() {
+      if (!actx || ambOn) return; ambOn = true;
+      (function loop() {
+        if (!visible) { ambOn = false; return; }
+        if (v.readyState >= 2) { try { actx.drawImage(v, 0, 0, amb.width, amb.height); } catch (e) { ambOn = false; return; } }
+        requestAnimationFrame(loop);
+      })();
+    }
+
+    // Enlaces que abren el vídeo con sonido (botón del hero, paleta)
+    $$('[data-reel-play]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var top = sec.getBoundingClientRect().top + window.scrollY + (sec.classList.contains('is-pinned') ? window.innerHeight * 0.95 : -24);
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        startSound(true);
+      });
+    });
+    window.__playReel = function () { $('[data-reel-play]').click(); };
+
+    // Cursor "play"
+    if (cursor && finePointer) {
+      frame.addEventListener('pointerover', function (e) { cursor.classList.toggle('is-reel', !e.target.closest('.reel__ui')); });
+      frame.addEventListener('pointerleave', function () { cursor.classList.remove('is-reel'); });
+    }
+
+    // Escritorio: el marco llega inclinado y se aplana con el scroll; luego sigue al ratón
+    var mq = window.matchMedia('(min-width: 900px) and (min-height: 620px)'), p = 0, mx = 0, my = 0, ticking = false;
+    function render() {
+      ticking = false;
+      if (!sec.classList.contains('is-pinned')) { frame.style.removeProperty('--rx'); frame.style.removeProperty('--ry'); frame.style.removeProperty('--sc'); return; }
+      var r = sec.getBoundingClientRect();
+      p = Math.max(0, Math.min(1, -r.top / (window.innerHeight * 0.9)));
+      var e = 1 - Math.pow(1 - p, 3);
+      frame.style.setProperty('--rx', ((1 - e) * 32 + my * -4).toFixed(2) + 'deg');
+      frame.style.setProperty('--ry', (mx * 6 * e).toFixed(2) + 'deg');
+      frame.style.setProperty('--sc', (0.62 + 0.38 * e).toFixed(3));
+      amb.style.opacity = (0.15 + 0.45 * e).toFixed(2);
+    }
+    function layout() {
+      sec.classList.toggle('is-pinned', mq.matches && !sec.classList.contains('reel--tall'));
+      render();
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(render); } }, { passive: true });
+    window.addEventListener('resize', layout);
+    if (finePointer) {
+      stage.addEventListener('pointermove', function (e) {
+        var r = stage.getBoundingClientRect();
+        mx = (e.clientX - r.left) / r.width - .5; my = (e.clientY - r.top) / r.height - .5;
+        if (!ticking) { ticking = true; requestAnimationFrame(render); }
+      });
+      stage.addEventListener('pointerleave', function () { mx = my = 0; if (!ticking) { ticking = true; requestAnimationFrame(render); } });
+    }
+    langListeners.push(syncUi);
+    layout(); syncUi(); progress();
   }
 
   function initConsole() {
@@ -797,6 +967,7 @@
     safe(initContact, 'contact');
     safe(initPalette, 'palette');
     safe(initPortrait, 'portrait');
+    safe(initReel, 'reel');
     safe(initConsole, 'console');
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
