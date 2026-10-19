@@ -28,7 +28,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/photos/hero.webp?v=20261018" type="image/webp">
   <link rel="stylesheet" href="lib/phosphor/style.css?v=20261018">
-  <link rel="stylesheet" href="styles.css?v=20261018f">
+  <link rel="stylesheet" href="styles.css?v=20261019">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Carlos Salguero","jobTitle":"Desarrollador web full-stack","url":"https://ercarlo672.github.io/","image":"https://ercarlo672.github.io/assets/photos/hero.webp","email":"carlossalguero09@gmail.com","sameAs":["https://github.com/ErCarlo672","https://www.linkedin.com/in/carlos-salguero-466617304/","https://www.instagram.com/caarloos_23/"],"knowsAbout":["React","Next.js","Node.js","Supabase","PostgreSQL","SEO técnico"]}
   </script>
@@ -45,6 +45,8 @@
     </div>
   </div>
 
+  <div class="ambient" aria-hidden="true"></div>
+  <canvas class="world" id="world" aria-hidden="true"></canvas>
   <div class="progress" id="progress" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"><div class="cursor__dot"></div><div class="cursor__ring"></div></div>
 
@@ -81,11 +83,11 @@
   <main id="main">
     <!-- HERO -->
     <section class="hero" id="top">
-      <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
       <div class="hero__grid" aria-hidden="true"></div>
       <div class="hero__glow" id="heroGlow" aria-hidden="true"></div>
       <div class="wrap hero__layout">
       <div class="hero__inner">
+        <p class="label chapter mono reveal" data-scramble>I · carlos salguero · full-stack</p>
         <p class="badge reveal"><span class="pulse"></span><span data-i18n="hero.badge">Disponible para 2 proyectos nuevos en noviembre</span></p>
         <h1 class="hero__title reveal" data-i18n-html="hero.title">Construyo webs rápidas<br>que convierten visitas<br>en clientes.</h1>
         <p class="hero__sub reveal" data-i18n="hero.sub">Soy Carlos, desarrollador full-stack. Diseño, programo y lanzo tu proyecto completo, de la interfaz a la base de datos, sin intermediarios y con un presupuesto cerrado.</p>
@@ -115,7 +117,7 @@
         </div>
       </figure>
       </div>
-      <a href="#servicios" class="hero__scroll mono" aria-label="Bajar"><span>scroll</span><i></i></a>
+      <a href="#servicios" class="hero__scroll mono" aria-label="Bajar"><span data-i18n="hero.scroll">desplázate · 8 capítulos</span><i></i></a>
     </section>
 
     <!-- MARQUEE STACK -->
@@ -129,7 +131,7 @@
     <!-- SERVICIOS (bento) -->
     <section class="section" id="servicios">
       <div class="wrap">
-        <p class="label mono reveal" data-scramble>01 / <span data-i18n="services.label">servicios</span></p>
+        <p class="label mono reveal" data-scramble>II · <span data-i18n="services.label">servicios</span></p>
         <h2 class="h2 reveal" data-i18n="services.title">Todo lo que tu proyecto necesita, en una sola persona.</h2>
         <div class="bento">
           <article class="card card--wide spot reveal">
@@ -186,7 +188,7 @@
           <a class="about__badge mono" href="https://www.instagram.com/caarloos_23/" target="_blank" rel="noopener"><i class="ph ph-instagram-logo"></i>caarloos_23</a>
         </figure>
         <div class="about__text">
-          <p class="label mono reveal" data-scramble>00 / <span data-i18n="about.label">sobre mí</span></p>
+          <p class="label mono reveal" data-scramble>III · <span data-i18n="about.label">sobre mí</span></p>
           <h2 class="h2 reveal" data-i18n-html="about.title">Hola, soy Carlos.<br>La persona detrás de tu&nbsp;web.</h2>
           <!-- EDITAR: cuenta aquí tu historia con tus palabras -->
           <p class="lead reveal" data-i18n="about.p1">Soy desarrollador full-stack y trabajo con negocios reales: clubes de pádel, estudios de uñas, empresas de servicios. Me gusta sentarme con el dueño, entender qué necesita y convertirlo en una web que trabaje por él.</p>
@@ -207,7 +209,7 @@
     <!-- PROYECTOS -->
     <section class="section" id="proyectos">
       <div class="wrap">
-        <p class="label mono reveal" data-scramble>02 / <span data-i18n="work.label">proyectos</span></p>
+        <p class="label mono reveal" data-scramble>IV · <span data-i18n="work.label">proyectos</span></p>
         <h2 class="h2 reveal" data-i18n="work.title">Trabajo reciente.</h2>
         <div class="projects">
           <article class="project reveal">
@@ -301,7 +303,7 @@
     <!-- PROCESO -->
     <section class="section" id="proceso">
       <div class="wrap">
-        <p class="label mono reveal" data-scramble>03 / <span data-i18n="process.label">proceso</span></p>
+        <p class="label mono reveal" data-scramble>V · <span data-i18n="process.label">proceso</span></p>
         <h2 class="h2 reveal" data-i18n="process.title">Cuatro pasos. Cero sorpresas.</h2>
         <ol class="steps" id="steps">
           <li class="step reveal"><span class="step__n mono">01</span><div><h3 data-i18n="st1.t">Llamada de descubrimiento</h3><p data-i18n="st1.d">30 minutos para entender tu negocio y tus objetivos. En 48 h recibes una propuesta con precio cerrado.</p></div></li>
@@ -316,7 +318,7 @@
     <section class="section" id="stack">
       <div class="wrap stack">
         <div>
-          <p class="label mono reveal" data-scramble>04 / stack</p>
+          <p class="label mono reveal" data-scramble>VI · stack</p>
           <h2 class="h2 reveal" data-i18n="stack.title">Herramientas modernas, elegidas para durar.</h2>
           <p class="lead reveal" data-i18n="stack.d">Uso tecnologías probadas en producción por miles de empresas. Tu web será rápida, segura y fácil de mantener por cualquier desarrollador en el futuro.</p>
           <ul class="guarantees reveal">
@@ -345,7 +347,7 @@
     <section class="section" id="faq">
       <div class="wrap faq">
         <div>
-          <p class="label mono reveal" data-scramble>05 / faq</p>
+          <p class="label mono reveal" data-scramble>VII · faq</p>
           <h2 class="h2 reveal" data-i18n="faq.title">Preguntas frecuentes.</h2>
         </div>
         <div class="faq__list">
@@ -363,7 +365,7 @@
     <section class="section contact" id="contacto">
       <div class="wrap contact__inner">
         <div>
-          <p class="label mono reveal" data-scramble>06 / <span data-i18n="contact.label">contacto</span></p>
+          <p class="label mono reveal" data-scramble>VIII · <span data-i18n="contact.label">contacto</span></p>
           <h2 class="contact__title reveal" data-i18n-html="contact.title">¿Tienes una idea?<br>Hagámosla real.</h2>
           <p class="lead reveal" data-i18n="contact.d">Respondo en menos de 24 h con una primera valoración. Sin compromiso.</p>
           
@@ -416,8 +418,16 @@
     </div>
   </div>
 
+  <nav class="dock" id="dock" aria-label="Accesos rápidos">
+    <a href="#proyectos" data-i18n="nav.work">Proyectos</a>
+    <a href="#servicios" data-i18n="nav.services">Servicios</a>
+    <a href="#sobre-mi" class="dock__opt" data-i18n="nav.about">Sobre mí</a>
+    <a href="#contacto" class="dock__cta"><span class="pulse"></span><span data-i18n="nav.cta">Hablemos</span></a>
+  </nav>
+  <nav class="rail" id="rail" aria-label="Capítulos"></nav>
+
   <div class="toast mono" id="toast" role="status"></div>
 
-  <script src="main.js?v=20261018f" defer></script>
+  <script src="main.js?v=20261019" defer></script>
 </body>
 </html>
