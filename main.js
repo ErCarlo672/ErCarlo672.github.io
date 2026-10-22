@@ -56,7 +56,7 @@
     'process.label': 'process', 'process.title': 'Four steps. Zero surprises.',
     'st1.t': 'Discovery call', 'st1.d': '30 minutes to understand your business and goals. Within 48 h you get a fixed price proposal.',
     'st2.t': 'Design and prototype', 'st2.d': 'You see your site before a single line is written. We refine it together until it fits your brand.',
-    'st3.t': 'Development with weekly releases', 'st3.d': 'Every Friday you get a preview URL with real progress, not just reports.',
+    'st3.t': 'Built in 2-3 days', 'st3.d': 'You get a preview URL to see the site working and ask for changes before it goes live.',
     'st4.t': 'Launch and support', 'st4.d': 'I publish your site, set up domain and analytics, and stay with you for 30 days of included support.',
     'stack.title': 'Modern tools, chosen to last.',
     'stack.d': 'I use technology proven in production by thousands of companies. Your site will be fast, secure and easy for any developer to maintain in the future.',
