@@ -17,7 +17,7 @@ Textos en inglés: diccionario `EN` al principio de `main.js`. El español se le
 
 ## Formulario
 
-Ahora abre el cliente de correo del visitante con el mensaje preparado. Para recibirlo directamente, crea un formulario gratis en formspree.io y cambia el `submit` de `initContact()` en `main.js`.
+Abre WhatsApp con el mensaje preparado y dirigido a tu número (`WHATSAPP`, al principio de `main.js`). El visitante solo tiene que pulsar enviar.
 
 ## Al volver a publicar
 
