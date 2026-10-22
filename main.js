@@ -4,6 +4,7 @@
   'use strict';
 
   var EMAIL = 'carlossalguero09@gmail.com';
+  var WHATSAPP = '34640082313'; // formato internacional sin + ni espacios
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var finePointer = window.matchMedia('(pointer: fine)').matches;
@@ -70,10 +71,10 @@
     'q6': 'What happens after launch?', 'a6': 'You get 30 days of included support. After that you can book monthly maintenance or ask for one off changes.',
     'contact.label': 'contact', 'contact.title': 'Got an idea?<br>Let’s make it real.',
     'contact.d': 'I reply within 24 h with a first assessment. No commitment.', 'contact.time': 'My time',
-    'f.name': 'Name', 'f.errName': 'Please enter your name.', 'f.errEmail': 'Check the email, it looks incomplete.',
+    'f.name': 'Name', 'f.errName': 'Please enter your name.',
     'f.type': 'Project type', 'f.t2': 'Company site', 'f.t3': 'Application', 'f.t4': 'Store',
     'f.msg': 'Tell me a bit more', 'f.errMsg': 'Add at least one sentence about your project.',
-    'f.send': 'Send message', 'f.ok': 'Your email app opened with the message ready. I will reply within 24 h.',
+    'f.send': 'Send on WhatsApp', 'f.ok': 'WhatsApp opened with the message ready. Just hit send and I will reply within 24 h.',
     'footer.made': 'Handmade, no templates.', 'footer.privacy': 'Privacy',
     'pal.ph': 'Type a command…'
   };
@@ -81,13 +82,13 @@
     es: {
       roles: ['Next.js y React', 'APIs con Node.js', 'Supabase y PostgreSQL', 'tiendas que venden', 'webs que cargan en < 1 s'],
       accWords: ['plantillas.', 'clic.'], copied: 'Email copiado', langSet: 'Idioma: español',
-      mailSubject: 'Nuevo proyecto', none: 'Sin resultados',
+      waIntro: 'Hola Carlos, te escribo desde tu web.', waName: 'Nombre', waType: 'Proyecto', none: 'Sin resultados',
       cmds: { reel: 'Ver el vídeo', about: 'Sobre mí', insta: 'Abrir Instagram', services: 'Ir a servicios', work: 'Ver proyectos', process: 'Ver proceso', stack: 'Ver stack', faq: 'Preguntas frecuentes', contact: 'Contactar', email: 'Copiar email', lang: 'Switch to English', github: 'Abrir GitHub', top: 'Volver arriba' }
     },
     en: {
       roles: ['Next.js & React', 'Node.js APIs', 'Supabase & PostgreSQL', 'stores that sell', 'sites that load in < 1 s'],
       accWords: ['templates.', 'click.'], copied: 'Email copied', langSet: 'Language: English',
-      mailSubject: 'New project', none: 'No results',
+      waIntro: 'Hi Carlos, I am writing from your website.', waName: 'Name', waType: 'Project', none: 'No results',
       cmds: { reel: 'Watch the video', about: 'About me', insta: 'Open Instagram', services: 'Go to services', work: 'See work', process: 'See process', stack: 'See stack', faq: 'FAQ', contact: 'Get in touch', email: 'Copy email', lang: 'Cambiar a español', github: 'Open GitHub', top: 'Back to top' }
     }
   };
@@ -382,9 +383,8 @@
     $('#year').textContent = new Date().getFullYear();
 
     var form = $('#form');
-    var reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     function check(input) {
-      var ok = input.type === 'email' ? reEmail.test(input.value.trim()) : input.value.trim().length >= (input.tagName === 'TEXTAREA' ? 10 : 2);
+      var ok = input.value.trim().length >= (input.tagName === 'TEXTAREA' ? 10 : 2);
       input.closest('.field').classList.toggle('is-err', !ok);
       input.setAttribute('aria-invalid', String(!ok));
       return ok;
@@ -399,9 +399,11 @@
       var bad = req.filter(function (i) { return !check(i); });
       if (bad.length) { bad[0].focus(); return; }
       var d = new FormData(form);
-      var body = d.get('message') + '\n\n— ' + d.get('name') + ' (' + d.get('email') + ')';
-      // EDITAR: para recibir el formulario sin abrir el correo, conecta Formspree o similar.
-      location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(UI[lang].mailSubject + ' · ' + d.get('type')) + '&body=' + encodeURIComponent(body);
+      var t = UI[lang], typeLabel = form.querySelector('[name="type"]:checked').nextElementSibling.textContent;
+      var text = t.waIntro + '\n\n' + t.waName + ': ' + d.get('name').trim() + '\n' + t.waType + ': ' + typeLabel + '\n\n' + d.get('message').trim();
+      var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(text);
+      var win = window.open(url, '_blank');
+      if (win) win.opener = null; else location.href = url;
       $('#formOk').classList.add('is-on');
     });
   }

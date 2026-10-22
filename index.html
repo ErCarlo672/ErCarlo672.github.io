@@ -424,7 +424,6 @@
         </div>
         <form class="form reveal" id="form" novalidate>
           <div class="field"><label for="f-name" data-i18n="f.name">Nombre</label><input id="f-name" name="name" autocomplete="name" required><p class="err" data-i18n="f.errName">Escribe tu nombre.</p></div>
-          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="err" data-i18n="f.errEmail">Revisa el email, parece incompleto.</p></div>
           <fieldset class="field">
             <legend data-i18n="f.type">Tipo de proyecto</legend>
             <div class="chips">
@@ -435,8 +434,8 @@
             </div>
           </fieldset>
           <div class="field"><label for="f-msg" data-i18n="f.msg">Cuéntame un poco más</label><textarea id="f-msg" name="message" rows="4" required></textarea><p class="err" data-i18n="f.errMsg">Añade al menos una frase sobre tu proyecto.</p></div>
-          <button class="btn btn--acc btn--lg magnetic" type="submit"><span data-i18n="f.send">Enviar mensaje</span><i class="ph ph-paper-plane-tilt"></i></button>
-          <p class="form__ok" id="formOk" role="status" data-i18n="f.ok">Se ha abierto tu cliente de correo con el mensaje preparado. Te respondo en menos de 24 h.</p>
+          <button class="btn btn--acc btn--lg magnetic" type="submit"><span data-i18n="f.send">Enviar por WhatsApp</span><i class="ph ph-whatsapp-logo"></i></button>
+          <p class="form__ok" id="formOk" role="status" data-i18n="f.ok">Se ha abierto WhatsApp con el mensaje preparado. Solo tienes que pulsar enviar y te respondo en menos de 24 h.</p>
         </form>
       </div>
     </section>
@@ -472,6 +471,6 @@
 
   <div class="toast mono" id="toast" role="status"></div>
 
-  <script src="main.js?v=20261022c" defer></script>
+  <script src="main.js?v=20261022d" defer></script>
 </body>
 </html>
