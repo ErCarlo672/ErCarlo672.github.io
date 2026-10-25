@@ -25,10 +25,10 @@
   <link rel="icon" href="assets/favicon.svg?v=20261018" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="assets/photos/hero.webp?v=20261018" type="image/webp">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/photos/hero-cutout.webp?v=20261025" type="image/webp">
   <link rel="stylesheet" href="lib/phosphor/style.css?v=20261018">
-  <link rel="stylesheet" href="styles.css?v=20261019">
+  <link rel="stylesheet" href="styles.css?v=20261025c">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Carlos Salguero","jobTitle":"Desarrollador web full-stack","url":"https://ercarlo672.github.io/","image":"https://ercarlo672.github.io/assets/photos/hero.webp","email":"carlossalguero09@gmail.com","sameAs":["https://github.com/ErCarlo672","https://www.linkedin.com/in/carlos-salguero-466617304/","https://www.instagram.com/caarloos_23/"],"knowsAbout":["React","Next.js","Node.js","Supabase","PostgreSQL","SEO técnico"]}
   </script>
@@ -63,7 +63,7 @@
     </nav>
     <button class="nav__k" id="openPalette" aria-label="Abrir paleta de comandos"><i class="ph ph-command"></i><span>K</span></button>
     <button class="nav__lang" id="langToggle" aria-label="Cambiar idioma"><span data-lang="es">ES</span><span data-lang="en">EN</span></button>
-    <a href="#contacto" class="btn btn--sm btn--acc magnetic" data-i18n="nav.cta">Hablemos</a>
+    <a href="#contacto" class="btn btn--sm btn--light magnetic"><span data-i18n="nav.cta">Hablemos</span><i class="ph ph-arrow-up-right"></i></a>
     <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
   </header>
 
@@ -83,41 +83,72 @@
   <main id="main">
     <!-- HERO -->
     <section class="hero" id="top">
+      <div class="hero__orb" aria-hidden="true"></div>
       <div class="hero__grid" aria-hidden="true"></div>
       <div class="hero__glow" id="heroGlow" aria-hidden="true"></div>
       <div class="wrap hero__layout">
       <div class="hero__inner">
-        <p class="label chapter mono reveal" data-scramble>I · carlos salguero · full-stack</p>
         <p class="badge reveal"><span class="pulse"></span><span data-i18n="hero.badge">Disponible para 2 proyectos nuevos en noviembre</span></p>
         <h1 class="hero__title reveal" data-i18n-html="hero.title">Construyo webs rápidas<br>que convierten visitas<br>en clientes.</h1>
         <p class="hero__sub reveal" data-i18n="hero.sub">Soy Carlos, desarrollador full-stack. Diseño, programo y lanzo tu proyecto completo, de la interfaz a la base de datos, sin intermediarios y con un presupuesto cerrado.</p>
-        <p class="hero__type mono reveal" aria-live="polite"><span class="c-acc">$</span> <span data-i18n="hero.typePrefix">especialidad</span>: <span id="typed" class="typed">Next.js y React</span><span class="caret"></span></p>
         <div class="hero__ctas reveal">
-          <a href="#contacto" class="btn btn--acc btn--lg magnetic"><span data-i18n="hero.cta">Cuéntame tu proyecto</span><i class="ph ph-arrow-right"></i></a>
-          <a href="#showreel" class="hero__reel" data-reel-play><span class="hero__reel-btn"><i class="ph ph-play"></i></span><span><span data-i18n="hero.reel">Ver el vídeo</span> <span class="mono c-mut">· 24 s</span></span></a>
+          <a href="#contacto" class="btn btn--acc btn--lg magnetic"><span data-i18n="hero.cta">Cuéntame tu proyecto</span><i class="ph ph-arrow-up-right"></i></a>
+          <a href="#proyectos" class="btn btn--ghost btn--lg magnetic"><span data-i18n="hero.cta2">Ver proyectos</span></a>
         </div>
-        <ul class="stats reveal">
-          <li><b class="mono"><span data-count="1" data-prefix="&lt; ">&lt; 1</span> s</b><span data-i18n="stats.load">carga objetivo</span></li>
-          <li><b class="mono"><span data-count="95">95</span>+</b><span data-i18n="stats.lh">en Lighthouse</span></li>
-          <li><b class="mono"><span data-count="24">24</span> h</b><span data-i18n="stats.reply">tiempo de respuesta</span></li>
-          <li><b class="mono"><span data-count="30">30</span> d</b><span data-i18n="stats.support">de soporte incluido</span></li>
-        </ul>
+        <p class="hero__type mono reveal" aria-live="polite"><span class="c-acc">$</span> <span data-i18n="hero.typePrefix">especialidad</span>: <span id="typed" class="typed">Next.js y React</span><span class="caret"></span></p>
       </div>
+
+      <!-- Retrato recortado en 3D: la cabeza sale de la tarjeta y un anillo orbita alrededor -->
       <figure class="portrait" id="portrait">
         <div class="portrait__stage" id="portraitStage">
-          <div class="portrait__ring" aria-hidden="true"></div>
-          <div class="portrait__card">
-            <img src="assets/photos/hero.webp?v=20261018" alt="Carlos Salguero sonriendo, con polo blanco, en una terraza junto al mar al anochecer" width="800" height="1000" fetchpriority="high">
-            <span class="portrait__scan" aria-hidden="true"></span>
-            <figcaption class="portrait__tag mono"><span class="pulse"></span>carlos.jpg · online</figcaption>
-          </div>
+          <div class="portrait__halo" aria-hidden="true"></div>
+          <div class="portrait__card" aria-hidden="true"><span class="portrait__grid"></span></div>
+          <div class="portrait__orbit" aria-hidden="true"><i></i></div>
+          <img class="portrait__img" src="assets/photos/hero-cutout.webp?v=20261025" alt="Carlos Salguero sonriendo, con polo blanco" width="800" height="1000" fetchpriority="high">
+          <figcaption class="portrait__tag mono"><span class="pulse"></span>carlos.jpg · online</figcaption>
           <div class="portrait__chip portrait__chip--a mono" aria-hidden="true"><i class="ph ph-rocket-launch"></i><span data-i18n="chip.a">6 webs lanzadas en 2026</span></div>
           <div class="portrait__chip portrait__chip--b mono" aria-hidden="true"><i class="ph ph-code"></i><span>full-stack</span></div>
           <div class="portrait__chip portrait__chip--c mono" aria-hidden="true"><i class="ph ph-cube"></i><span>Three.js · 3D</span></div>
         </div>
       </figure>
       </div>
-      <a href="#servicios" class="hero__scroll mono" aria-label="Bajar"><span data-i18n="hero.scroll">desplázate · 8 capítulos</span><i></i></a>
+
+      <!-- Galería curva 3D: el retrato en el centro y los proyectos a los lados -->
+      <div class="curve reveal" id="curve" aria-label="Proyectos recientes">
+        <div class="curve__track" id="curveTrack">
+          <a class="curve__item" href="#proyectos" tabindex="-1"><img src="assets/shots/fato-web.webp?v=20261018" alt="" loading="lazy" width="1200" height="750"><span class="curve__cap mono">FATO</span></a>
+          <a class="curve__item" href="#proyectos" tabindex="-1"><img src="assets/shots/haro-activewear.webp?v=20261022" alt="" loading="lazy" width="1200" height="750"><span class="curve__cap mono">HARO</span></a>
+          <a class="curve__item" href="#proyectos" tabindex="-1"><img src="assets/shots/desatranques-jaen-web.webp?v=20261016b" alt="" width="1200" height="750"><span class="curve__cap mono">Desatranques Jaén</span></a>
+          <a class="curve__item curve__item--me" href="#showreel" data-reel-play aria-label="Ver el vídeo de presentación">
+            <img src="assets/video/poster-9x16.jpg?v=20261019" alt="" width="1080" height="1920">
+            <span class="curve__play" aria-hidden="true"><i class="ph ph-play"></i></span>
+            <span class="curve__cap mono">showreel · 24 s</span>
+          </a>
+          <a class="curve__item" href="#proyectos" tabindex="-1"><img src="assets/shots/wild-padel.webp?v=20261018" alt="" width="1200" height="750"><span class="curve__cap mono">Wild Padel</span></a>
+          <a class="curve__item" href="#proyectos" tabindex="-1"><img src="assets/shots/marbella-maintenance.webp?v=20261018" alt="" loading="lazy" width="1200" height="750"><span class="curve__cap mono">Marbella Maintenance</span></a>
+          <a class="curve__item" href="#proyectos" tabindex="-1"><img src="assets/shots/greennatura.webp?v=20261022" alt="" loading="lazy" width="1200" height="750"><span class="curve__cap mono">Greennatura</span></a>
+        </div>
+      </div>
+
+      <ul class="pills reveal" aria-label="Servicios">
+        <li><i class="ph ph-browsers"></i><span data-i18n="s1.t">Webs a medida</span></li>
+        <li><i class="ph ph-stack"></i><span data-i18n="s2.t">Aplicaciones full-stack</span></li>
+        <li><i class="ph ph-shopping-bag-open"></i><span data-i18n="s3.t">Tiendas online</span></li>
+        <li><i class="ph ph-gauge"></i><span data-i18n="pill.seo">SEO técnico</span></li>
+      </ul>
+    </section>
+
+    <!-- Escenario luminoso con las cifras -->
+    <section class="stage" aria-label="Cifras">
+      <div class="stage__floor" aria-hidden="true"></div>
+      <div class="wrap">
+        <ul class="stats">
+          <li class="reveal"><span data-i18n="stats.load">carga objetivo</span><b class="mono"><span data-count="1" data-prefix="&lt; ">&lt; 1</span>s</b><p data-i18n="stats.load.d">Webs ligeras que abren al instante, también con mala cobertura.</p></li>
+          <li class="reveal"><span data-i18n="stats.lh">en Lighthouse</span><b class="mono"><span data-count="95">95</span>+</b><p data-i18n="stats.lh.d">Rendimiento, accesibilidad y SEO medidos en cada entrega.</p></li>
+          <li class="reveal"><span data-i18n="stats.reply">tiempo de respuesta</span><b class="mono"><span data-count="24">24</span>h</b><p data-i18n="stats.reply.d">Me escribes hoy y mañana tienes una propuesta con precio.</p></li>
+          <li class="reveal"><span data-i18n="stats.support">de soporte incluido</span><b class="mono"><span data-count="30">30</span>d</b><p data-i18n="stats.support.d">Después del lanzamiento sigo contigo para cualquier ajuste.</p></li>
+        </ul>
+      </div>
     </section>
 
     <!-- MARQUEE STACK -->
@@ -128,52 +159,43 @@
       </div>
     </div>
 
-    <!-- SHOWREEL -->
-    <section class="reel" id="showreel" aria-label="Vídeo de presentación">
-      <div class="reel__pin">
-        <div class="wrap reel__head">
-          <p class="label mono reveal" data-scramble>▶ / <span data-i18n="reel.label">showreel · 24 s</span></p>
-          <h2 class="h2 reveal" data-i18n="reel.title">24 segundos que lo resumen todo.</h2>
-        </div>
-        <div class="reel__stage" id="reelStage">
-          <canvas class="reel__ambient" id="reelAmbient" width="48" height="27" aria-hidden="true"></canvas>
-          <div class="reel__frame" id="reelFrame" tabindex="0" aria-label="Reproductor de vídeo. Espacio para pausar, M para el sonido, F para pantalla completa">
-            <video id="reel" muted playsinline loop preload="metadata" poster="assets/video/poster-16x9.jpg?v=20261019"
-              data-wide="assets/video/showreel-16x9.mp4?v=20261019" data-tall="assets/video/showreel-9x16.mp4?v=20261019"
-              data-poster-tall="assets/video/poster-9x16.jpg?v=20261019">
-              <source src="assets/video/showreel-16x9.mp4?v=20261019" type="video/mp4">
-            </video>
-            <div class="reel__shade" aria-hidden="true"></div>
-            <button class="reel__play" id="reelPlay" type="button">
-              <span class="reel__play-btn"><span class="reel__play-ring"></span><i class="ph ph-play"></i></span>
-              <span class="reel__play-t mono" data-i18n="reel.play">Ver con sonido</span>
-            </button>
-            <div class="reel__ui">
-              <button type="button" id="reelToggle" aria-label="Pausar"><i class="ph ph-pause"></i></button>
-              <button type="button" id="reelMute" aria-label="Activar sonido"><i class="ph ph-speaker-slash"></i></button>
-              <div class="reel__bar" id="reelBar" role="slider" tabindex="0" aria-label="Progreso del vídeo" aria-valuemin="0" aria-valuemax="24" aria-valuenow="0">
-                <div class="reel__fill" id="reelFill"></div>
-                <span class="reel__tick" style="left:10.4%"></span><span class="reel__tick" style="left:18.75%"></span><span class="reel__tick" style="left:43.75%"></span><span class="reel__tick" style="left:52.1%"></span><span class="reel__tick" style="left:60.4%"></span><span class="reel__tick" style="left:77.1%"></span>
-              </div>
-              <span class="reel__time mono" id="reelTime">0:00 / 0:24</span>
-              <button type="button" id="reelFs" aria-label="Pantalla completa"><i class="ph ph-corners-out"></i></button>
+    <!-- SHOWREEL: miniatura luminosa que se abre en un lightbox -->
+    <section class="reel sec-c" id="showreel" aria-label="Vídeo de presentación">
+      <div class="wrap reel__head">
+        <p class="label mono reveal" data-scramble>▶ / <span data-i18n="reel.label">showreel · 24 s</span></p>
+        <h2 class="h2 reveal" data-i18n="reel.title">24 segundos que lo resumen todo.</h2>
+      </div>
+      <div class="reel__stage reveal" id="reelStage">
+        <canvas class="reel__ambient" id="reelAmbient" width="48" height="27" aria-hidden="true"></canvas>
+        <div class="reel__slot" id="reelSlot">
+        <div class="reel__frame" id="reelFrame" tabindex="0" aria-label="Reproductor de vídeo. Espacio para pausar, M para el sonido, F para pantalla completa">
+          <video id="reel" muted playsinline loop preload="metadata" poster="assets/video/poster-16x9.jpg?v=20261019"
+            data-wide="assets/video/showreel-16x9.mp4?v=20261019" data-tall="assets/video/showreel-9x16.mp4?v=20261019"
+            data-poster-tall="assets/video/poster-9x16.jpg?v=20261019">
+            <source src="assets/video/showreel-16x9.mp4?v=20261019" type="video/mp4">
+          </video>
+          <div class="reel__shade" aria-hidden="true"></div>
+          <button class="reel__play" id="reelPlay" type="button">
+            <span class="reel__play-btn"><span class="reel__play-ring"></span><i class="ph ph-play"></i></span>
+            <span class="reel__play-t mono" data-i18n="reel.play">Ver con sonido</span>
+          </button>
+          <div class="reel__ui">
+            <button type="button" id="reelToggle" aria-label="Pausar"><i class="ph ph-pause"></i></button>
+            <button type="button" id="reelMute" aria-label="Activar sonido"><i class="ph ph-speaker-slash"></i></button>
+            <div class="reel__bar" id="reelBar" role="slider" tabindex="0" aria-label="Progreso del vídeo" aria-valuemin="0" aria-valuemax="24" aria-valuenow="0">
+              <div class="reel__fill" id="reelFill"></div>
+              <span class="reel__tick" style="left:10.4%"></span><span class="reel__tick" style="left:18.75%"></span><span class="reel__tick" style="left:43.75%"></span><span class="reel__tick" style="left:52.1%"></span><span class="reel__tick" style="left:60.4%"></span><span class="reel__tick" style="left:77.1%"></span>
             </div>
+            <span class="reel__time mono" id="reelTime">0:00 / 0:24</span>
+            <button type="button" id="reelFs" aria-label="Pantalla completa"><i class="ph ph-corners-out"></i></button>
           </div>
         </div>
-        <ol class="reel__chapters mono" id="reelChapters">
-          <li><button type="button" data-t="0"><b>00</b><span data-i18n="ch.1">Intro</span></button></li>
-          <li><button type="button" data-t="2.5"><b>02</b><span data-i18n="ch.2">Rendimiento</span></button></li>
-          <li><button type="button" data-t="4.5"><b>04</b><span data-i18n="ch.3">Proyectos</span></button></li>
-          <li><button type="button" data-t="10.5"><b>10</b><span data-i18n="ch.4">Código</span></button></li>
-          <li><button type="button" data-t="12.5"><b>12</b>Full-stack</button></li>
-          <li><button type="button" data-t="14.5"><b>14</b><span data-i18n="ch.6">Garantías</span></button></li>
-          <li><button type="button" data-t="18.5"><b>18</b><span data-i18n="ch.7">Hablemos</span></button></li>
-        </ol>
+        </div>
       </div>
     </section>
 
     <!-- SERVICIOS (bento) -->
-    <section class="section" id="servicios">
+    <section class="section sec-c" id="servicios">
       <div class="wrap">
         <p class="label mono reveal" data-scramble>II · <span data-i18n="services.label">servicios</span></p>
         <h2 class="h2 reveal" data-i18n="services.title">Todo lo que tu proyecto necesita, en una sola persona.</h2>
@@ -250,102 +272,111 @@
       </div>
     </section>
 
-    <!-- PROYECTOS -->
-    <section class="section" id="proyectos">
+    <!-- PROYECTOS: carrusel infinito con curva 3D -->
+    <section class="section sec-c" id="proyectos">
       <div class="wrap">
         <p class="label mono reveal" data-scramble>IV · <span data-i18n="work.label">proyectos</span></p>
         <h2 class="h2 reveal" data-i18n="work.title">Trabajo reciente.</h2>
-        <div class="projects">
-          <article class="project reveal">
-            <a class="project__frame tilt" href="https://ercarlo672.github.io/desatranques-jaen-web/" target="_blank" rel="noopener">
-              <div class="project__bar"><i></i><i></i><i></i><span class="mono">ercarlo672.github.io/desatranques-jaen-web</span></div>
+        <p class="lead work__lead reveal" data-i18n="work.sub">Webs reales, publicadas y funcionando para negocios de verdad. Arrastra para verlas todas y abre cualquiera en vivo.</p>
+      </div>
+      <div class="showcase reveal" id="showcase">
+        <div class="showcase__track" id="showcaseTrack">
+          <article class="work">
+            <a class="work__media" href="https://ercarlo672.github.io/desatranques-jaen-web/" target="_blank" rel="noopener">
               <img src="assets/shots/desatranques-jaen-web.webp?v=20261016b" alt="Página de inicio de Desatranques Jaén con el titular Desatascos sin obras, sin esperas" loading="lazy" width="1200" height="750">
+              <span class="work__icon" aria-hidden="true"><i class="ph ph-drop"></i></span>
+              <span class="work__badge mono"><i class="ph ph-globe-simple"></i>ercarlo672.github.io/desatranques-jaen-web</span>
             </a>
-            <div class="project__meta">
-              <p class="mono c-mut">2026 · <span data-i18n="p1.type">Web corporativa + SEO local</span></p>
+            <div class="work__body">
+              <p class="work__type mono">2026 · <span data-i18n="p1.type">Web corporativa + SEO local</span></p>
               <h3>Desatranques Jaén</h3>
               <p data-i18n="p1.d">Web para una empresa de desatascos con urgencias 24 h. Llamada en un toque desde el móvil, páginas por servicio y zona, y SEO local para Jaén, Úbeda y provincia.</p>
               <ul class="tags mono"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>SEO local</li></ul>
-              <a class="link-arrow project__live" href="https://ercarlo672.github.io/desatranques-jaen-web/" target="_blank" rel="noopener"><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
+              <a class="work__live" href="https://ercarlo672.github.io/desatranques-jaen-web/" target="_blank" rel="noopener"><i class="ph ph-seal-check"></i><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
             </div>
           </article>
-          <article class="project project--alt reveal">
-            <a class="project__frame tilt" href="https://ercarlo672.github.io/marbellaMaintenance/" target="_blank" rel="noopener">
-              <div class="project__bar"><i></i><i></i><i></i><span class="mono">ercarlo672.github.io/marbellaMaintenance</span></div>
+          <article class="work">
+            <a class="work__media" href="https://ercarlo672.github.io/marbellaMaintenance/" target="_blank" rel="noopener">
               <img src="assets/shots/marbella-maintenance.webp?v=20261018" alt="Página de inicio de Marbella Maintenance con una piscina al anochecer" loading="lazy" width="1200" height="750">
+              <span class="work__icon" aria-hidden="true"><i class="ph ph-swimming-pool"></i></span>
+              <span class="work__badge mono"><i class="ph ph-globe-simple"></i>ercarlo672.github.io/marbellaMaintenance</span>
             </a>
-            <div class="project__meta">
-              <p class="mono c-mut">2026 · <span data-i18n="p2.type">Web multipágina + app</span></p>
+            <div class="work__body">
+              <p class="work__type mono">2026 · <span data-i18n="p2.type">Web multipágina + app</span></p>
               <h3>Marbella Maintenance</h3>
               <p data-i18n="p2.d">Plataforma para una empresa de mantenimiento premium en Marbella. Bilingüe, con reserva de citas online y área privada de clientes conectada a Supabase.</p>
               <ul class="tags mono"><li>Supabase</li><li>Auth</li><li>JavaScript</li><li>i18n</li></ul>
-              <a class="link-arrow project__live" href="https://ercarlo672.github.io/marbellaMaintenance/" target="_blank" rel="noopener"><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
+              <a class="work__live" href="https://ercarlo672.github.io/marbellaMaintenance/" target="_blank" rel="noopener"><i class="ph ph-seal-check"></i><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
             </div>
           </article>
-          <article class="project reveal">
-            <a class="project__frame tilt" href="https://ercarlo672.github.io/wild-padel/" target="_blank" rel="noopener">
-              <div class="project__bar"><i></i><i></i><i></i><span class="mono">wildpadel.es</span></div>
+          <article class="work">
+            <a class="work__media" href="https://ercarlo672.github.io/wild-padel/" target="_blank" rel="noopener">
               <img src="assets/shots/wild-padel.webp?v=20261018" alt="Página de inicio de Wild Padel Indoor con una pista de pádel en 3D y el titular Juega salvaje" loading="lazy" width="1200" height="750">
+              <span class="work__icon" aria-hidden="true"><i class="ph ph-tennis-ball"></i></span>
+              <span class="work__badge mono"><i class="ph ph-globe-simple"></i>wildpadel.es</span>
             </a>
-            <div class="project__meta">
-              <p class="mono c-mut">2026 · <span data-i18n="p4.type">Web inmersiva 3D</span></p>
+            <div class="work__body">
+              <p class="work__type mono">2026 · <span data-i18n="p4.type">Web inmersiva 3D</span></p>
               <h3>Wild Padel Indoor</h3>
               <p data-i18n="p4.d">Club de pádel indoor en Dos Hermanas. Pista 3D en tiempo real que se recorre con el scroll, carrusel 3D con los vídeos del director técnico, clase de prueba por WhatsApp y reserva conectada a Playtomic.</p>
               <ul class="tags mono"><li>Three.js</li><li>GSAP</li><li>WebGL</li><li>SEO local</li></ul>
-              <a class="link-arrow project__live" href="https://ercarlo672.github.io/wild-padel/" target="_blank" rel="noopener"><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
+              <a class="work__live" href="https://ercarlo672.github.io/wild-padel/" target="_blank" rel="noopener"><i class="ph ph-seal-check"></i><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
             </div>
           </article>
-          <article class="project project--alt reveal">
-            <a class="project__frame tilt" href="https://haroactivewear.com/" target="_blank" rel="noopener">
-              <div class="project__bar"><i></i><i></i><i></i><span class="mono">haroactivewear.com</span></div>
+          <article class="work">
+            <a class="work__media" href="https://haroactivewear.com/" target="_blank" rel="noopener">
               <img src="assets/shots/haro-activewear.webp?v=20261022" alt="Página de inicio de HARO Activewear con tres modelos en ropa deportiva y el titular Hecha para destacar, no para encajar" loading="lazy" width="1200" height="750">
+              <span class="work__icon" aria-hidden="true"><i class="ph ph-t-shirt"></i></span>
+              <span class="work__badge mono"><i class="ph ph-globe-simple"></i>haroactivewear.com</span>
             </a>
-            <div class="project__meta">
-              <p class="mono c-mut">2026 · <span data-i18n="p5.type">Tienda online Shopify</span></p>
+            <div class="work__body">
+              <p class="work__type mono">2026 · <span data-i18n="p5.type">Tienda online Shopify</span></p>
               <h3>HARO Activewear</h3>
               <p data-i18n="p5.d">Tienda online de ropa deportiva con tema a medida en Shopify. Portada con vídeo, selector de tonos, cada prenda enlazada a sus otros colores y a su conjunto, guía de tallas y lanzamiento del drop con cuenta atrás.</p>
               <ul class="tags mono"><li>Shopify</li><li>Liquid</li><li>JavaScript</li><li>E-commerce</li></ul>
-              <a class="link-arrow project__live" href="https://haroactivewear.com/" target="_blank" rel="noopener"><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
+              <a class="work__live" href="https://haroactivewear.com/" target="_blank" rel="noopener"><i class="ph ph-seal-check"></i><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
             </div>
           </article>
-          <article class="project reveal">
-            <a class="project__frame tilt" href="https://greennatura.es/" target="_blank" rel="noopener">
-              <div class="project__bar"><i></i><i></i><i></i><span class="mono">greennatura.es</span></div>
+          <article class="work">
+            <a class="work__media" href="https://greennatura.es/" target="_blank" rel="noopener">
               <img src="assets/shots/greennatura.webp?v=20261022" alt="Página de inicio de Greennatura con el titular Césped artificial nuevo y reciclado, desde 4 euros el metro cuadrado" loading="lazy" width="1200" height="750">
+              <span class="work__icon" aria-hidden="true"><i class="ph ph-plant"></i></span>
+              <span class="work__badge mono"><i class="ph ph-globe-simple"></i>greennatura.es</span>
             </a>
-            <div class="project__meta">
-              <p class="mono c-mut">2026 · <span data-i18n="p6.type">Web escaparate + scroll animado</span></p>
+            <div class="work__body">
+              <p class="work__type mono">2026 · <span data-i18n="p6.type">Web escaparate + scroll animado</span></p>
               <h3>Greennatura</h3>
               <p data-i18n="p6.d">Web para una empresa de césped artificial nuevo y reciclado en Morón de la Frontera. Escenas que avanzan con el scroll, catálogo de modelos, calculadora de metros y presupuesto directo por WhatsApp.</p>
               <ul class="tags mono"><li>GSAP</li><li>JavaScript</li><li>Cloudflare</li><li>SEO local</li></ul>
-              <a class="link-arrow project__live" href="https://greennatura.es/" target="_blank" rel="noopener"><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
+              <a class="work__live" href="https://greennatura.es/" target="_blank" rel="noopener"><i class="ph ph-seal-check"></i><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
             </div>
           </article>
-          <article class="project project--alt reveal">
-            <a class="project__frame tilt" href="https://ercarlo672.github.io/fato-web/" target="_blank" rel="noopener">
-              <div class="project__bar"><i></i><i></i><i></i><span class="mono">ercarlo672.github.io/fato-web</span></div>
+          <article class="work">
+            <a class="work__media" href="https://ercarlo672.github.io/fato-web/" target="_blank" rel="noopener">
               <img src="assets/shots/fato-web.webp?v=20261018" alt="Página de inicio del rediseño de la Federación Andaluza de Tiro Olímpico con el titular El pulso más firme de Andalucía" loading="lazy" width="1200" height="750">
+              <span class="work__icon" aria-hidden="true"><i class="ph ph-target"></i></span>
+              <span class="work__badge mono"><i class="ph ph-globe-simple"></i>ercarlo672.github.io/fato-web</span>
             </a>
-            <div class="project__meta">
-              <p class="mono c-mut">2026 · <span data-i18n="p7.type">Rediseño web institucional</span></p>
+            <div class="work__body">
+              <p class="work__type mono">2026 · <span data-i18n="p7.type">Rediseño web institucional</span></p>
               <h3>FATO · Federación Andaluza de Tiro Olímpico</h3>
               <p data-i18n="p7.d">Rediseño conceptual de la web de la federación: calendario 2026 con filtros y exportación a la agenda, agenda en directo de las 8 delegaciones conectada a su WordPress, directorio de 72 clubes y protocolo del seguro paso a paso.</p>
               <ul class="tags mono"><li>JavaScript</li><li>REST API</li><li>Python</li><li>Accesibilidad</li></ul>
-              <a class="link-arrow project__live" href="https://ercarlo672.github.io/fato-web/" target="_blank" rel="noopener"><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
+              <a class="work__live" href="https://ercarlo672.github.io/fato-web/" target="_blank" rel="noopener"><i class="ph ph-seal-check"></i><span data-i18n="work.live">Ver la web en vivo</span><i class="ph ph-arrow-up-right"></i></a>
             </div>
           </article>
-          <a href="#contacto" class="project-next spot reveal">
+          <a href="#contacto" class="work work--next">
             <span class="mono c-acc">07 / ???</span>
             <h3 data-i18n="p3.t">Tu proyecto puede ser el siguiente.</h3>
             <p data-i18n="p3.d">Cuéntame qué necesitas y en 24 h tienes una propuesta con precio y fechas.</p>
-            <span class="project-next__go"><i class="ph ph-arrow-up-right"></i></span>
+            <span class="work__go"><i class="ph ph-arrow-up-right"></i></span>
           </a>
         </div>
       </div>
     </section>
 
     <!-- PROCESO -->
-    <section class="section" id="proceso">
+    <section class="section sec-c" id="proceso">
       <div class="wrap">
         <p class="label mono reveal" data-scramble>V · <span data-i18n="process.label">proceso</span></p>
         <h2 class="h2 reveal" data-i18n="process.title">Cuatro pasos. Cero sorpresas.</h2>
@@ -453,6 +484,23 @@
     <p class="footer__big" aria-hidden="true">carlos<span class="c-acc">.</span>dev</p>
   </footer>
 
+  <!-- Lightbox del vídeo -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Vídeo de presentación" hidden>
+    <div class="lightbox__backdrop" data-close></div>
+    <button class="lightbox__close" type="button" data-close aria-label="Cerrar vídeo"><i class="ph ph-x"></i></button>
+    <div class="lightbox__body" id="lightboxBody">
+      <ol class="reel__chapters mono" id="reelChapters">
+        <li><button type="button" data-t="0"><b>00</b><span data-i18n="ch.1">Intro</span></button></li>
+        <li><button type="button" data-t="2.5"><b>02</b><span data-i18n="ch.2">Rendimiento</span></button></li>
+        <li><button type="button" data-t="4.5"><b>04</b><span data-i18n="ch.3">Proyectos</span></button></li>
+        <li><button type="button" data-t="10.5"><b>10</b><span data-i18n="ch.4">Código</span></button></li>
+        <li><button type="button" data-t="12.5"><b>12</b>Full-stack</button></li>
+        <li><button type="button" data-t="14.5"><b>14</b><span data-i18n="ch.6">Garantías</span></button></li>
+        <li><button type="button" data-t="18.5"><b>18</b><span data-i18n="ch.7">Hablemos</span></button></li>
+      </ol>
+    </div>
+  </div>
+
   <!-- Paleta de comandos (Ctrl/⌘ + K) -->
   <div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Paleta de comandos" hidden>
     <div class="palette__box">
@@ -471,6 +519,6 @@
 
   <div class="toast mono" id="toast" role="status"></div>
 
-  <script src="main.js?v=20261022d" defer></script>
+  <script src="main.js?v=20261025c" defer></script>
 </body>
 </html>

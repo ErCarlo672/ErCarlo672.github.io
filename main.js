@@ -24,7 +24,10 @@
     'hero.title': 'I build fast websites<br>that turn visitors<br>into clients.',
     'hero.sub': "I'm Carlos, a full-stack developer. I design, build and launch your entire project, from the interface to the database, with no middlemen and a fixed price.",
     'hero.typePrefix': 'focus',
-    'hero.cta': 'Tell me about your project', 'hero.cta2': 'See my work', 'hero.scroll': 'scroll · 8 chapters',
+    'hero.cta': 'Tell me about your project', 'hero.cta2': 'See my work', 'pill.seo': 'Technical SEO',
+    'work.sub': 'Real websites, live and working for real businesses. Drag to see them all and open any of them live.',
+    'stats.load.d': 'Lightweight sites that open instantly, even on a weak connection.', 'stats.lh.d': 'Performance, accessibility and SEO measured on every delivery.',
+    'stats.reply.d': 'Write to me today and tomorrow you have a priced proposal.', 'stats.support.d': 'After launch I stay with you for any tweak you need.', 'hero.scroll': 'scroll · 8 chapters',
     'stats.load': 'target load time', 'stats.lh': 'on Lighthouse', 'stats.reply': 'response time', 'stats.support': 'of support included',
     'services.label': 'services', 'services.title': 'Everything your project needs, in one person.',
     's1.t': 'Custom websites', 's1.d': 'Landing pages and company sites designed from scratch, with careful animation and built to win clients.',
@@ -456,6 +459,49 @@
   }
 
   /* ---------------- Easter egg en consola ---------------- */
+  /* ---------------- Galería curva 3D del hero ---------------- */
+  // Las tarjetas se colocan en el interior de un cilindro con la cámara en su eje,
+  // así las de los lados se ven más grandes e inclinadas hacia el visitante.
+  function initCurve() {
+    var curve = $('#curve'), track = $('#curveTrack'); if (!curve || !track) return;
+    var items = $$('.curve__item', track), mid = Math.floor(items.length / 2);
+    var R = 1000, turn = 0, target = 0, spin = 0, raf = null;
+
+    function layout() {
+      curve.classList.add('is-3d'); // antes de medir: sin esta clase las tarjetas laterales están ocultas
+      R = parseFloat(getComputedStyle(curve).getPropertyValue('--r')) || 1000;
+      var gap = 18, ang = [], w = items.map(function (el) { return el.offsetWidth; });
+      ang[mid] = 0;
+      for (var i = mid + 1; i < items.length; i++) ang[i] = ang[i - 1] + (w[i - 1] / 2 + gap + w[i] / 2) / R;
+      for (var j = mid - 1; j >= 0; j--) ang[j] = ang[j + 1] - (w[j + 1] / 2 + gap + w[j] / 2) / R;
+      items.forEach(function (el, k) { el.dataset.a = ang[k]; });
+      paint();
+    }
+    function paint() {
+      raf = null;
+      turn += (target + spin - turn) * .08;
+      items.forEach(function (el) {
+        var a = parseFloat(el.dataset.a) + turn;
+        el.style.transform = 'translateZ(' + R + 'px) rotateY(' + a.toFixed(4) + 'rad) translateZ(' + (-R) + 'px)';
+        el.style.opacity = Math.max(0, Math.min(1, 1.6 - Math.abs(a) * 1.5)).toFixed(3);
+      });
+      if (Math.abs(target + spin - turn) > .0005) raf = requestAnimationFrame(paint);
+    }
+    function kick() { if (!raf) raf = requestAnimationFrame(paint); }
+
+    // El scroll gira el cilindro y el ratón lo inclina un poco
+    window.addEventListener('scroll', function () {
+      spin = -Math.min(window.scrollY / window.innerHeight, 1.2) * .18; kick();
+    }, { passive: true });
+    if (finePointer) {
+      $('#top').addEventListener('pointermove', function (e) { target = (e.clientX / window.innerWidth - .5) * -.18; kick(); });
+      $('#top').addEventListener('pointerleave', function () { target = 0; kick(); });
+    }
+    var rt;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(layout, 150); });
+    layout();
+  }
+
   /* ---------------- Retrato 3D del hero ---------------- */
   function initPortrait() {
     var stage = $('#portraitStage'), hero = $('#top'); if (!stage || !hero) return;
@@ -465,7 +511,7 @@
         var r = stage.getBoundingClientRect();
         var x = (e.clientX - (r.left + r.width / 2)) / window.innerWidth;
         var y = (e.clientY - (r.top + r.height / 2)) / window.innerHeight;
-        stage.style.setProperty('--ry', (x * 22).toFixed(2) + 'deg');
+        stage.style.setProperty('--ry', (x * 26).toFixed(2) + 'deg');
         stage.style.setProperty('--rx', (-y * 18).toFixed(2) + 'deg');
         chips.forEach(function (c, i) { c.style.translate = (x * (14 + i * 10)).toFixed(1) + 'px ' + (y * (10 + i * 8)).toFixed(1) + 'px'; });
       });
@@ -473,32 +519,110 @@
         stage.style.setProperty('--ry', '0deg'); stage.style.setProperty('--rx', '0deg');
         chips.forEach(function (c) { c.style.translate = ''; });
       });
+    } else {
+      // En móvil gira un poco con el scroll para que se note la profundidad
+      window.addEventListener('scroll', function () {
+        var k = Math.min(window.scrollY / window.innerHeight, 1);
+        stage.style.setProperty('--ry', (k * -18).toFixed(2) + 'deg');
+        stage.style.setProperty('--rx', (k * 8).toFixed(2) + 'deg');
+      }, { passive: true });
     }
     // Entrada: el retrato gira desde el fondo
     stage.animate([
-      { opacity: 0, transform: 'perspective(1200px) rotateY(-35deg) rotateX(12deg) translateZ(-200px)' },
-      { opacity: 1, transform: 'perspective(1200px) rotateY(0deg) rotateX(0deg) translateZ(0)' }
+      { opacity: 0, transform: 'rotateY(-35deg) rotateX(12deg) translateZ(-200px)' },
+      { opacity: 1, transform: 'rotateY(0deg) rotateX(0deg) translateZ(0)' }
     ], { duration: 1600, delay: 900, easing: 'cubic-bezier(0.32, 0.72, 0, 1)', fill: 'backwards' });
+  }
+
+  /* ---------------- Carrusel de proyectos con curva 3D ---------------- */
+  // Avanza solo, se para al pasar el ratón y se puede arrastrar. Las tarjetas
+  // se inclinan según su distancia al centro, como la galería del hero.
+  function initShowcase() {
+    var box = $('#showcase'), track = $('#showcaseTrack'); if (!box || !track) return;
+    var originals = $$('.work', track);
+    originals.forEach(function (el) { // segunda copia para que el bucle no tenga costura
+      var c = el.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      $$('a', c).forEach(function (a) { a.setAttribute('tabindex', '-1'); });
+      if (c.matches('a')) c.setAttribute('tabindex', '-1');
+      track.appendChild(c);
+    });
+    var cards = $$('.work', track);
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var x = 0, half = 0, speed = reduce ? 0 : 38, hover = false, drag = null, moved = 0, last = performance.now(), running = false, visible = false;
+    box.classList.add('is-live');
+
+    function measure() { half = track.scrollWidth / 2; }
+    function wrap() { if (half) { while (x <= -half) x += half; while (x > 0) x -= half; } }
+    function paint() {
+      track.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
+      var mid = box.clientWidth / 2;
+      cards.forEach(function (c) {
+        var cx = c.offsetLeft + c.offsetWidth / 2 + x - mid, k = Math.max(-1.4, Math.min(1.4, cx / mid));
+        c.style.transform = 'rotateY(' + (-k * 16).toFixed(2) + 'deg) translateZ(' + (-Math.abs(k) * 70).toFixed(1) + 'px)';
+      });
+    }
+    function tick(now) {
+      var dt = Math.min(50, now - last) / 1000; last = now;
+      if (!drag && !hover) { x -= speed * dt; wrap(); }
+      paint();
+      if (visible) requestAnimationFrame(tick); else running = false;
+    }
+    function start() { if (running) return; running = true; last = performance.now(); requestAnimationFrame(tick); }
+
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) start(); }).observe(box);
+    if (finePointer) {
+      box.addEventListener('pointerenter', function () { hover = true; });
+      box.addEventListener('pointerleave', function () { hover = false; });
+    }
+    box.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      drag = { x0: e.clientX, from: x, id: e.pointerId }; moved = 0;
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      moved = Math.abs(e.clientX - drag.x0);
+      if (moved > 6) { box.classList.add('is-drag'); x = drag.from + (e.clientX - drag.x0); wrap(); }
+    });
+    window.addEventListener('pointerup', function () { drag = null; box.classList.remove('is-drag'); });
+    window.addEventListener('pointercancel', function () { drag = null; box.classList.remove('is-drag'); });
+    // Si se ha arrastrado, el clic final no abre la web
+    box.addEventListener('click', function (e) { if (moved > 6) { e.preventDefault(); e.stopPropagation(); moved = 0; } }, true);
+    box.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    // Con teclado: la tarjeta enfocada se centra
+    box.addEventListener('focusin', function (e) {
+      var c = e.target.closest('.work'); if (!c) return;
+      box.scrollLeft = 0; hover = true;
+      x = -(c.offsetLeft + c.offsetWidth / 2 - box.clientWidth / 2); wrap(); paint();
+    });
+    box.addEventListener('focusout', function () { if (finePointer && box.matches(':hover')) return; hover = false; });
+    var rt;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { measure(); wrap(); paint(); }, 150); });
+    window.addEventListener('load', measure);
+    measure(); paint();
   }
 
   /* ---------------- Showreel interactivo ---------------- */
   function initReel() {
     var sec = $('#showreel'), v = $('#reel'), frame = $('#reelFrame'); if (!sec || !v || !frame) return;
-    var stage = $('#reelStage'), amb = $('#reelAmbient'), actx = amb && amb.getContext ? amb.getContext('2d') : null;
+    var amb = $('#reelAmbient'), actx = amb && amb.getContext ? amb.getContext('2d') : null;
     var btnPlay = $('#reelPlay'), btnToggle = $('#reelToggle'), btnMute = $('#reelMute'), btnFs = $('#reelFs');
     var bar = $('#reelBar'), fill = $('#reelFill'), time = $('#reelTime');
     var chapters = $$('#reelChapters button'), cursor = $('.cursor');
     var sound = false, visible = false, dur = 24;
     var L = function (es, en) { return lang === 'en' ? en : es; };
+    // El marco viaja entre la sección y el lightbox: su estado se marca en los dos
+    function mark(name, on) { sec.classList.toggle(name, on); var l = $('#lightbox'); if (l) l.classList.toggle(name, on); }
 
     // Vídeo vertical en móviles en vertical
     if (window.matchMedia('(max-width: 700px) and (orientation: portrait)').matches) {
       sec.classList.add('reel--tall');
+      if ($('#lightbox')) $('#lightbox').classList.add('lightbox--tall');
       v.poster = v.getAttribute('data-poster-tall');
       v.querySelector('source').src = v.getAttribute('data-tall');
       v.load();
     }
-    if (!finePointer) sec.classList.add('is-touch');
+    if (!finePointer) mark('is-touch', true);
 
     function fmt(t) { t = Math.max(0, Math.floor(t)); return Math.floor(t / 60) + ':' + ('0' + (t % 60)).slice(-2); }
     function setIcon(btn, name) { var i = btn.querySelector('i'); i.className = 'ph ' + name; }
@@ -507,7 +631,7 @@
       btnToggle.setAttribute('aria-label', v.paused ? L('Reproducir', 'Play') : L('Pausar', 'Pause'));
       setIcon(btnMute, v.muted ? 'ph-speaker-slash' : 'ph-speaker-high');
       btnMute.setAttribute('aria-label', v.muted ? L('Activar sonido', 'Unmute') : L('Silenciar', 'Mute'));
-      sec.classList.toggle('is-paused', v.paused);
+      mark('is-paused', v.paused);
       if (cursor) cursor.classList.toggle('is-reel-pause', sound && !v.paused);
     }
     function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
@@ -521,18 +645,18 @@
     }, { threshold: 0.25 }).observe(frame);
 
     function startSound(fromStart) {
-      sound = true; sec.classList.add('is-sound');
+      sound = true; mark('is-sound', true);
       if (fromStart) v.currentTime = 0;
       v.loop = false; v.muted = false; tryPlay(); syncUi();
       try { frame.focus({ preventScroll: true }); } catch (e) {}
     }
     function backToPreview() {
-      sound = false; sec.classList.remove('is-sound');
+      sound = false; mark('is-sound', false);
       v.muted = true; v.loop = true; v.currentTime = 0; if (visible) tryPlay(); syncUi();
     }
     function toggle() { if (!sound) { startSound(true); return; } if (v.paused) tryPlay(); else v.pause(); }
 
-    btnPlay.addEventListener('click', function (e) { e.stopPropagation(); startSound(true); });
+    btnPlay.addEventListener('click', function (e) { e.stopPropagation(); open(); });
     btnToggle.addEventListener('click', function (e) { e.stopPropagation(); toggle(); });
     btnMute.addEventListener('click', function (e) { e.stopPropagation(); v.muted = !v.muted; syncUi(); });
     btnFs.addEventListener('click', function (e) {
@@ -541,17 +665,17 @@
       if (frame.requestFullscreen) frame.requestFullscreen().catch(function () {});
       else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
     });
-    frame.addEventListener('click', function (e) { if (e.target.closest('.reel__ui')) return; toggle(); });
+    frame.addEventListener('click', function (e) { if (e.target.closest('.reel__ui')) return; if (!isOpen) open(); else toggle(); });
     frame.addEventListener('keydown', function (e) {
       var k = e.key.toLowerCase();
-      if (k === ' ' || k === 'k') { e.preventDefault(); toggle(); }
-      else if (k === 'm') { v.muted = !v.muted; if (!sound) startSound(false); syncUi(); }
+      if (k === ' ' || k === 'k' || k === 'enter') { e.preventDefault(); if (!isOpen) open(); else toggle(); }
+      else if (k === 'm') { if (!isOpen) { open(); return; } v.muted = !v.muted; syncUi(); }
       else if (k === 'f') btnFs.click();
       else if (k === 'arrowright') v.currentTime = Math.min(dur, v.currentTime + 2);
       else if (k === 'arrowleft') v.currentTime = Math.max(0, v.currentTime - 2);
     });
     v.addEventListener('play', syncUi); v.addEventListener('pause', syncUi);
-    v.addEventListener('ended', function () { if (sound) backToPreview(); });
+    v.addEventListener('ended', function () { if (sound) close(); });
     v.addEventListener('loadedmetadata', function () { if (v.duration) dur = v.duration; });
 
     // Progreso y capítulos
@@ -571,7 +695,7 @@
     chapters.forEach(function (b) {
       b.addEventListener('click', function () {
         v.currentTime = +b.getAttribute('data-t');
-        if (!sound) startSound(false); else tryPlay();
+        tryPlay();
         progress();
       });
     });
@@ -602,12 +726,7 @@
 
     // Enlaces que abren el vídeo con sonido (botón del hero, paleta)
     $$('[data-reel-play]').forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
-        var top = sec.getBoundingClientRect().top + window.scrollY + (sec.classList.contains('is-pinned') ? window.innerHeight * 0.95 : -24);
-        window.scrollTo({ top: top, behavior: 'smooth' });
-        startSound(true);
-      });
+      a.addEventListener('click', function (e) { e.preventDefault(); open(); });
     });
     window.__playReel = function () { $('[data-reel-play]').click(); };
 
@@ -617,35 +736,48 @@
       frame.addEventListener('pointerleave', function () { cursor.classList.remove('is-reel'); });
     }
 
-    // Escritorio: el marco llega inclinado y se aplana con el scroll; luego sigue al ratón
-    var mq = window.matchMedia('(min-width: 900px) and (min-height: 620px)'), p = 0, mx = 0, my = 0, ticking = false;
-    function render() {
-      ticking = false;
-      if (!sec.classList.contains('is-pinned')) { frame.style.removeProperty('--rx'); frame.style.removeProperty('--ry'); frame.style.removeProperty('--sc'); return; }
-      var r = sec.getBoundingClientRect();
-      p = Math.max(0, Math.min(1, -r.top / (window.innerHeight * 0.9)));
-      var e = 1 - Math.pow(1 - p, 3);
-      frame.style.setProperty('--rx', ((1 - e) * 32 + my * -4).toFixed(2) + 'deg');
-      frame.style.setProperty('--ry', (mx * 6 * e).toFixed(2) + 'deg');
-      frame.style.setProperty('--sc', (0.62 + 0.38 * e).toFixed(3));
-      amb.style.opacity = (0.15 + 0.45 * e).toFixed(2);
+    // Lightbox: la miniatura luminosa crece desde su sitio hasta el centro de la pantalla (técnica FLIP)
+    var lb = $('#lightbox'), lbBody = $('#lightboxBody'), slot = $('#reelSlot'), isOpen = false, anim = null, lastFocus = null;
+    var EASE = 'cubic-bezier(0.32, 0.72, 0, 1)';
+    function flip(a, b) { // transform que hace que el elemento en b parezca estar en a
+      return 'translate(' + (a.left - b.left) + 'px,' + (a.top - b.top) + 'px) scale(' + (a.width / b.width) + ',' + (a.height / b.height) + ')';
     }
-    function layout() {
-      sec.classList.toggle('is-pinned', mq.matches && !sec.classList.contains('reel--tall'));
-      render();
+    function open() {
+      if (isOpen || !lb) return; isOpen = true; lastFocus = document.activeElement;
+      if (anim) { anim.finish(); }
+      var from = frame.getBoundingClientRect();
+      slot.style.height = from.height + 'px';
+      lb.hidden = false; lbBody.insertBefore(frame, lbBody.firstChild);
+      document.documentElement.classList.add('is-locked'); sec.classList.add('is-open');
+      var to = frame.getBoundingClientRect();
+      frame.style.transformOrigin = '0 0';
+      anim = frame.animate([{ transform: flip(from, to) }, { transform: 'none' }], { duration: 750, easing: EASE });
+      anim.onfinish = function () { anim = null; };
+      requestAnimationFrame(function () { lb.classList.add('is-on'); });
+      startSound(true);
     }
-    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(render); } }, { passive: true });
-    window.addEventListener('resize', layout);
-    if (finePointer) {
-      stage.addEventListener('pointermove', function (e) {
-        var r = stage.getBoundingClientRect();
-        mx = (e.clientX - r.left) / r.width - .5; my = (e.clientY - r.top) / r.height - .5;
-        if (!ticking) { ticking = true; requestAnimationFrame(render); }
-      });
-      stage.addEventListener('pointerleave', function () { mx = my = 0; if (!ticking) { ticking = true; requestAnimationFrame(render); } });
+    function close() {
+      if (!isOpen) return; isOpen = false;
+      if (document.fullscreenElement) document.exitFullscreen().catch(function () {});
+      if (anim) anim.finish();
+      var from = frame.getBoundingClientRect(), to = slot.getBoundingClientRect();
+      lb.classList.remove('is-on');
+      backToPreview();
+      anim = frame.animate([{ transform: 'none' }, { transform: flip(to, from) }], { duration: 650, easing: EASE, fill: 'forwards' });
+      anim.onfinish = function () {
+        slot.appendChild(frame); slot.style.height = ''; frame.style.transformOrigin = '';
+        lb.hidden = true; document.documentElement.classList.remove('is-locked'); sec.classList.remove('is-open');
+        anim.cancel(); anim = null;
+        if (visible) tryPlay();
+      };
+      if (lastFocus && lastFocus.focus) try { lastFocus.focus({ preventScroll: true }); } catch (e) {}
+    }
+    if (lb) {
+      $$('[data-close]', lb).forEach(function (el) { el.addEventListener('click', close); });
+      document.addEventListener('keydown', function (e) { if (isOpen && e.key === 'Escape') { e.preventDefault(); close(); } });
     }
     langListeners.push(syncUi);
-    layout(); syncUi(); progress();
+    syncUi(); progress();
   }
 
   function initConsole() {
@@ -654,13 +786,13 @@
 
   /* ---------------- Capítulos: cada sección tiene forma, posición y luz propias ---------------- */
   var CHAPTERS = [
-    { id: 'top',       n: 'I',    name: { es: 'intro', en: 'intro' },         shape: 'globe',  x: .72, y: .5,  k: 1,    a: 1,   spin: .0016, tilt: .35, amb: 'rgba(197,255,74,.10)' },
-    { id: 'servicios', n: 'II',   name: { es: 'servicios', en: 'services' },  shape: 'wave',   x: .5,  y: .7,  k: 1.5,  a: .5,  spin: .0006, tilt: .55, amb: 'rgba(74,227,255,.09)' },
-    { id: 'sobre-mi',  n: 'III',  name: { es: 'sobre mí', en: 'about' },      shape: 'ring',   x: .27, y: .5,  k: 1.4,  a: .75, spin: .0022, tilt: 1.25,  amb: 'rgba(197,255,74,.08)' },
-    { id: 'proyectos', n: 'IV',   name: { es: 'proyectos', en: 'work' },      shape: 'helix',  x: .9,  y: .5,  k: 1.1,  a: .6,  spin: .004,  tilt: .15, amb: 'rgba(120,140,255,.09)' },
-    { id: 'proceso',   n: 'V',    name: { es: 'proceso', en: 'process' },     shape: 'tunnel', x: .78, y: .5,  k: 1,    a: .55, spin: .0012, tilt: 0,   amb: 'rgba(74,227,255,.08)' },
-    { id: 'stack',     n: 'VI',   name: { es: 'stack', en: 'stack' },         shape: 'cube',   x: .2,  y: .5,  k: .85,  a: .55, spin: .003,  tilt: .5,  amb: 'rgba(197,255,74,.08)' },
-    { id: 'faq',       n: 'VII',  name: { es: 'faq', en: 'faq' },             shape: 'dust',   x: .5,  y: .5,  k: 1.2,  a: .35, spin: .0008, tilt: .2,  amb: 'rgba(160,120,255,.07)' },
+    { id: 'top',       n: 'I',    name: { es: 'intro', en: 'intro' },         shape: 'dust',   x: .5,  y: .4,  k: 2.2,  a: .45, spin: .0006, tilt: .2,  amb: 'rgba(197,255,74,.10)' },
+    { id: 'servicios', n: 'II',   name: { es: 'servicios', en: 'services' },  shape: 'wave',   x: .5,  y: .7,  k: 1.5,  a: .45, spin: .0006, tilt: .55, amb: 'rgba(74,227,255,.09)' },
+    { id: 'sobre-mi',  n: 'III',  name: { es: 'sobre mí', en: 'about' },      shape: 'ring',   x: .27, y: .5,  k: 1.4,  a: .6,  spin: .0022, tilt: 1.25,  amb: 'rgba(197,255,74,.08)' },
+    { id: 'proyectos', n: 'IV',   name: { es: 'proyectos', en: 'work' },      shape: 'helix',  x: .9,  y: .5,  k: 1.1,  a: .5,  spin: .004,  tilt: .15, amb: 'rgba(120,140,255,.09)' },
+    { id: 'proceso',   n: 'V',    name: { es: 'proceso', en: 'process' },     shape: 'tunnel', x: .78, y: .5,  k: 1,    a: .45, spin: .0012, tilt: 0,   amb: 'rgba(74,227,255,.08)' },
+    { id: 'stack',     n: 'VI',   name: { es: 'stack', en: 'stack' },         shape: 'cube',   x: .2,  y: .5,  k: .85,  a: .5,  spin: .003,  tilt: .5,  amb: 'rgba(197,255,74,.08)' },
+    { id: 'faq',       n: 'VII',  name: { es: 'faq', en: 'faq' },             shape: 'dust',   x: .5,  y: .5,  k: 1.2,  a: .3,  spin: .0008, tilt: .2,  amb: 'rgba(160,120,255,.07)' },
     { id: 'contacto',  n: 'VIII', name: { es: 'contacto', en: 'contact' },    shape: 'word',   x: .5,  y: .55, k: 1.3,  a: .3,  spin: 0,     tilt: 0,   amb: 'rgba(197,255,74,.12)' }
   ];
   var chapterListeners = [];
@@ -927,8 +1059,12 @@
     }
     render();
     langListeners.push(render);
+    // En la portada se oculta para no taparse con el retrato
+    function hide(c) { rail.classList.toggle('is-off', c.id === 'top'); }
+    hide(currentChapter);
     chapterListeners.push(function (c) {
       Object.keys(links).forEach(function (id) { links[id].classList.toggle('is-on', id === c.id); });
+      hide(c);
     });
   }
 
@@ -969,6 +1105,8 @@
     safe(initContact, 'contact');
     safe(initPalette, 'palette');
     safe(initPortrait, 'portrait');
+    safe(initCurve, 'curve');
+    safe(initShowcase, 'showcase');
     safe(initReel, 'reel');
     safe(initConsole, 'console');
   }
