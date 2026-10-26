@@ -936,7 +936,9 @@ html.is-locked { overflow: hidden; }
 }
 .showcase.is-live { overflow: hidden; }
 .showcase.is-drag { cursor: grabbing; }
-.showcase__track { display: flex; gap: 20px; width: max-content; padding-left: 20px; transform-style: preserve-3d; will-change: transform; }
+/* Las tarjetas se hunden en Z por detrás del plano del track: sin esto el track se queda con los clics y los enlaces no abren */
+.showcase__track { display: flex; gap: 20px; width: max-content; padding-left: 20px; transform-style: preserve-3d; will-change: transform; pointer-events: none; }
+.showcase__track > * { pointer-events: auto; }
 .work {
   position: relative; flex: none; width: 380px; display: flex; flex-direction: column; border-radius: 22px; overflow: hidden;
   border: 1px solid rgba(255, 255, 255, .07); will-change: transform; backface-visibility: hidden;

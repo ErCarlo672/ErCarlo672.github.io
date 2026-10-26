@@ -552,13 +552,14 @@
     var x = 0, half = 0, speed = reduce ? 0 : 38, hover = false, drag = null, moved = 0, last = performance.now(), running = false, visible = false;
     box.classList.add('is-live');
 
-    function measure() { half = track.scrollWidth / 2; }
+    var boxW = 0, centers = []; // centro de cada tarjeta, medido una vez para no forzar layout en cada fotograma
+    function measure() { half = track.scrollWidth / 2; boxW = box.clientWidth; centers = cards.map(function (c) { return c.offsetLeft + c.offsetWidth / 2; }); }
     function wrap() { if (half) { while (x <= -half) x += half; while (x > 0) x -= half; } }
     function paint() {
       track.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
-      var mid = box.clientWidth / 2;
-      cards.forEach(function (c) {
-        var cx = c.offsetLeft + c.offsetWidth / 2 + x - mid, k = Math.max(-1.4, Math.min(1.4, cx / mid));
+      var mid = boxW / 2;
+      cards.forEach(function (c, i) {
+        var cx = centers[i] + x - mid, k = Math.max(-1.4, Math.min(1.4, cx / mid));
         c.style.transform = 'rotateY(' + (-k * 16).toFixed(2) + 'deg) translateZ(' + (-Math.abs(k) * 70).toFixed(1) + 'px)';
       });
     }
