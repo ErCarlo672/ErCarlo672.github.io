@@ -28,7 +28,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/photos/hero-cutout.webp?v=20261025" type="image/webp">
   <link rel="stylesheet" href="lib/phosphor/style.css?v=20261018">
-  <link rel="stylesheet" href="styles.css?v=20261026a">
+  <link rel="stylesheet" href="styles.css?v=20261026e">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Carlos Salguero","jobTitle":"Desarrollador web full-stack","url":"https://ercarlo672.github.io/","image":"https://ercarlo672.github.io/assets/photos/hero.webp","email":"carlossalguero09@gmail.com","sameAs":["https://github.com/ErCarlo672","https://www.linkedin.com/in/carlos-salguero-466617304/","https://www.instagram.com/caarloos_23/"],"knowsAbout":["React","Next.js","Node.js","Supabase","PostgreSQL","SEO técnico"]}
   </script>
@@ -246,13 +246,21 @@
 
     <!-- SOBRE MÍ -->
     <section class="section about" id="sobre-mi">
+      <div class="about__pin">
       <div class="wrap about__grid">
-        <figure class="about__photo reveal">
-          <div class="about__frame tilt">
-            <img src="assets/photos/about.webp?v=20261018" alt="Carlos Salguero sentado con los brazos cruzados delante de un mural pintado" loading="lazy" width="880" height="1100">
+        <!-- Particle Self: la nube forma el retrato y luego el logo según el scroll -->
+        <div class="about__visual reveal" id="pself">
+          <canvas class="pself__canvas" id="pselfCanvas" role="img" aria-label="Retrato de Carlos formado por partículas que después se convierten en el logo cs"></canvas>
+          <div class="pself__hud mono" aria-hidden="true">
+            <span><span class="c-acc">//</span> particle_self.js</span>
+            <span><span id="pselfCount">0</span> <span data-i18n="ps.pts">partículas</span> · <span id="pselfPct">000</span>%</span>
           </div>
-          <a class="about__badge mono" href="https://www.instagram.com/caarloos_23/" target="_blank" rel="noopener"><i class="ph ph-instagram-logo"></i>caarloos_23</a>
-        </figure>
+          <ol class="pself__steps" aria-hidden="true">
+            <li class="is-on"><span class="pself__k mono">01 / <span data-i18n="ps.k1">ruido</span></span><p data-i18n="ps.t1">Todo empieza con mil ideas sueltas.</p></li>
+            <li><span class="pself__k mono">02 / <span data-i18n="ps.k2">forma</span></span><p data-i18n="ps.t2">Detrás de cada web hay alguien que las ordena.</p></li>
+            <li><span class="pself__k mono">03 / <span data-i18n="ps.k3">código</span></span><p data-i18n="ps.t3">Y las convierte en código que funciona.</p></li>
+          </ol>
+        </div>
         <div class="about__text">
           <p class="label mono reveal" data-scramble>III · <span data-i18n="about.label">sobre mí</span></p>
           <h2 class="h2 reveal" data-i18n-html="about.title">Hola, soy Carlos.<br>La persona detrás de tu&nbsp;web.</h2>
@@ -269,6 +277,7 @@
             <a href="https://www.instagram.com/caarloos_23/" class="link-arrow" target="_blank" rel="noopener"><i class="ph ph-instagram-logo"></i><span>@caarloos_23</span></a>
           </div>
         </div>
+      </div>
       </div>
     </section>
 
@@ -519,6 +528,6 @@
 
   <div class="toast mono" id="toast" role="status"></div>
 
-  <script src="main.js?v=20261026a" defer></script>
+  <script src="main.js?v=20261026e" defer></script>
 </body>
 </html>

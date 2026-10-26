@@ -49,6 +49,8 @@
     'p7.type': 'Institutional website redesign',
     'p7.d': 'Concept redesign for the Andalusian Olympic Shooting Federation: 2026 calendar with filters and calendar export, live agendas for its 8 delegations connected to their WordPress, a 72-club directory and a step-by-step insurance guide.',
     'work.live': 'See it live',
+    'ps.pts': 'particles', 'ps.k1': 'noise', 'ps.k2': 'shape', 'ps.k3': 'code',
+    'ps.t1': 'It all starts with a thousand loose ideas.', 'ps.t2': 'Behind every website there is someone putting them in order.', 'ps.t3': 'And turning them into code that works.',
     'hero.reel': 'Watch the video', 'reel.label': 'showreel · 24 s', 'reel.title': '24 seconds that sum it all up.', 'reel.play': 'Watch with sound',
     'ch.1': 'Intro', 'ch.2': 'Performance', 'ch.3': 'Work', 'ch.4': 'Code', 'ch.6': 'Guarantees', 'ch.7': "Let's talk",
     'chip.a': '6 sites launched in 2026',
@@ -603,6 +605,188 @@
     measure(); paint();
   }
 
+  /* ---------------- Sobre mí · Particle Self: retrato en partículas guiado por el scroll ---------------- */
+  // Tres formas para las mismas partículas: nube suelta, retrato en relieve y el logo <cs/>.
+  // El scroll mezcla una con otra; cada partícula llega con su propio retraso para que fluya.
+  function initParticleSelf() {
+    var sec = $('#sobre-mi'), box = $('#pself'), cv = $('#pselfCanvas'); if (!sec || !box || !cv || !cv.getContext) return;
+    var pin = $('.about__pin', sec);
+    var ctx = cv.getContext('2d');
+    var steps = $$('.pself__steps li', box), pctEl = $('#pselfPct'), countEl = $('#pselfCount');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var N = window.innerWidth < 700 ? 5000 : 9000;
+    var S3 = new Float32Array(N * 3), P3 = new Float32Array(N * 3), T3 = new Float32Array(N * 3);
+    var LUM = new Float32Array(N), TC = new Float32Array(N), SEED = new Float32Array(N), OX = new Float32Array(N), OY = new Float32Array(N);
+    var hasT = false;
+
+    // Paleta: cian → lima → blanco lima
+    var B = 16, COLORS = [];
+    (function () {
+      var stops = [[74, 227, 255], [197, 255, 74], [240, 255, 214]];
+      for (var b = 0; b < B; b++) {
+        var u = b / (B - 1) * 2, k = Math.min(1, Math.floor(u)), f = u - k, a = stops[k], c = stops[k + 1];
+        COLORS.push('rgb(' + Math.round(a[0] + (c[0] - a[0]) * f) + ',' + Math.round(a[1] + (c[1] - a[1]) * f) + ',' + Math.round(a[2] + (c[2] - a[2]) * f) + ')');
+      }
+    })();
+
+    // Nube: cáscara esférica achatada
+    for (var i = 0; i < N; i++) {
+      var th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1), r = .75 + Math.pow(Math.random(), .6) * 1.1;
+      S3[i * 3] = r * Math.sin(ph) * Math.cos(th); S3[i * 3 + 1] = r * Math.cos(ph) * .62; S3[i * 3 + 2] = r * Math.sin(ph) * Math.sin(th);
+      SEED[i] = Math.random();
+      LUM[i] = TC[i] = SEED[i];
+    }
+    // Hasta tener retrato o logo, esas formas son la propia nube
+    P3.set(S3); T3.set(S3);
+
+    function sample(w, h, draw, minAlpha) {
+      var c = document.createElement('canvas'); c.width = w; c.height = h;
+      var g = c.getContext('2d', { willReadFrequently: true }); draw(g);
+      var d = g.getImageData(0, 0, w, h).data, pts = [];
+      for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) {
+        var o = (y * w + x) * 4;
+        if (d[o + 3] > minAlpha) pts.push(x, y, (d[o] * .3 + d[o + 1] * .59 + d[o + 2] * .11) / 255);
+      }
+      return pts;
+    }
+
+    var img = new Image();
+    img.onload = function () {
+      var w = 200, h = 250;
+      var pts = sample(w, h, function (g) { g.drawImage(img, 0, 0, w, h); }, 150), n = pts.length / 3;
+      if (!n) return;
+      // Contraste del retrato: estira la luminancia al rango real de la foto
+      var lo = 1, hi = 0;
+      for (var j = 0; j < n; j++) { var l = pts[j * 3 + 2]; if (l < lo) lo = l; if (l > hi) hi = l; }
+      for (var i = 0; i < N; i++) {
+        var q = (Math.random() * n | 0) * 3, lum = Math.min(1, Math.max(0, (pts[q + 2] - lo) / ((hi - lo) || 1)));
+        var py = (pts[q + 1] + Math.random() - h / 2) / h;
+        // El cuerpo se apaga hacia cian para que la mirada vaya a la cara
+        LUM[i] = Math.pow(lum, .8) * Math.max(.12, 1 - Math.max(0, py - .02) * 2.6);
+        P3[i * 3] = (pts[q] + Math.random() - w / 2) / h;
+        P3[i * 3 + 1] = py;
+        P3[i * 3 + 2] = (lum - .5) * .3 + (Math.random() - .5) * .02;
+      }
+    };
+    img.src = 'assets/photos/hero-cutout.webp?v=20261025';
+
+    function sampleLogo() {
+      if (hasT) return;
+      var w = 720, h = 240;
+      var pts = sample(w, h, function (g) {
+        g.fillStyle = '#fff'; g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.font = '700 200px "Geist Mono", ui-monospace, Consolas, monospace';
+        g.fillText('<cs/>', w / 2, h / 2 + 6);
+      }, 128), n = pts.length / 3;
+      if (!n) return;
+      for (var i = 0; i < N; i++) {
+        var q = (Math.random() * n | 0) * 3;
+        T3[i * 3] = (pts[q] + Math.random() - w / 2) / w * 1.5;
+        T3[i * 3 + 1] = (pts[q + 1] + Math.random() - h / 2) / w * 1.5;
+        T3[i * 3 + 2] = (Math.random() - .5) * .08;
+        TC[i] = pts[q] / w;
+      }
+      hasT = true;
+    }
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(sampleLogo); setTimeout(sampleLogo, 3000); } else sampleLogo();
+    function syncCount() { if (countEl) countEl.textContent = N.toLocaleString(lang === 'en' ? 'en' : 'es'); }
+    langListeners.push(syncCount); syncCount();
+
+    // Lienzo y encuadre
+    var W = 0, H = 0, dpr = 1, cx = 0, cy = 0, SC = 1, TK = 1, dot = 1.6;
+    function resize() {
+      // Solo se fija si el texto cabe entero en la pantalla
+      var grid = $('.about__grid', sec);
+      sec.classList.add('is-pinned'); // se mide ya con el estilo compacto del modo fijo
+      if (grid && grid.offsetHeight > window.innerHeight - 136) sec.classList.remove('is-pinned');
+      W = cv.clientWidth; H = cv.clientHeight; dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // El lienzo desborda el panel (144% × 128%) para que la nube no se corte; el retrato se encuadra en el panel.
+      // TK encoge el logo para que quepa a lo ancho.
+      var bw = W / 1.44, bh = H / 1.28;
+      cx = W / 2; cy = H / 2 + bh * .04; SC = Math.min(bh * .84, bw * 1.15); TK = Math.min(1, bw * 1.15 / (SC * 1.5)); dot = bw < 380 ? 1.3 : 1.6;
+    }
+
+    // Scroll y puntero
+    var p = 0, sp = 0, ptr = { x: 0, y: 0, on: false, nx: 0, ny: 0 }, sx = 0, sy = 0;
+    // Fijado (escritorio): el progreso es el scroll dentro del apartado. Sin fijar (móvil): lo que ha recorrido el panel por la pantalla.
+    function progress() {
+      var vh = window.innerHeight, v;
+      if (pin && getComputedStyle(pin).position === 'sticky') {
+        var total = sec.offsetHeight - vh; v = total > 0 ? -sec.getBoundingClientRect().top / total : 0;
+      } else v = (vh - box.getBoundingClientRect().top) / (vh * .9);
+      p = Math.min(1, Math.max(0, v));
+    }
+    window.addEventListener('scroll', progress, { passive: true });
+    sec.addEventListener('pointermove', function (e) {
+      var r = cv.getBoundingClientRect();
+      ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top; ptr.on = true;
+      ptr.nx = ptr.x / W - .5; ptr.ny = ptr.y / H - .5;
+    }, { passive: true });
+    sec.addEventListener('pointerleave', function () { ptr.on = false; ptr.nx = 0; ptr.ny = 0; });
+
+    function smooth(a, b, x) { x = Math.min(1, Math.max(0, (x - a) / (b - a))); return x * x * (3 - 2 * x); }
+    function ease(x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+
+    var step = -1, paths = [], t0 = performance.now(), running = false, visible = false;
+    function frame(now) {
+      var t = (now - t0) / 1000;
+      sp = reduce ? p : sp + (p - sp) * .09;
+      sx += (ptr.nx - sx) * .06; sy += (ptr.ny - sy) * .06;
+      var gather = smooth(.06, .36, sp), morph = smooth(.56, .8, sp);
+      var yaw = (sp - .46) * 1.2 + sx * .5, pitch = sy * .3 - .05;
+      var cyw = Math.cos(yaw), syw = Math.sin(yaw), cp = Math.cos(pitch), spt = Math.sin(pitch);
+      var spin = reduce ? 0 : t * .08, cs = Math.cos(spin), ss = Math.sin(spin);
+      var FOV = 2.4, R = W >= 900 ? 110 : 70, R2 = R * R, wob = reduce ? 0 : .006;
+
+      for (var b = 0; b < B; b++) paths[b] = new Path2D();
+      for (var i = 0; i < N; i++) {
+        var i3 = i * 3, d = SEED[i] * .45;
+        var g = ease((gather - d * .7) / .7), m = ease((morph - d * .7) / .7);
+        // Nube girando
+        var ax = S3[i3] * cs - S3[i3 + 2] * ss, ay = S3[i3 + 1], az = S3[i3] * ss + S3[i3 + 2] * cs;
+        var x = ax + (P3[i3] - ax) * g, y = ay + (P3[i3 + 1] - ay) * g, z = az + (P3[i3 + 2] - az) * g;
+        x += (T3[i3] * TK - x) * m; y += (T3[i3 + 1] * TK - y) * m; z += (T3[i3 + 2] - z) * m;
+        // A mitad del cambio retrato → logo, las partículas saltan hacia fuera
+        var burst = Math.sin(m * Math.PI) * (SEED[i] - .5) * .9;
+        z += burst; y -= Math.abs(burst) * .25;
+        x += Math.sin(t * 1.3 + SEED[i] * 40) * wob; y += Math.cos(t * 1.1 + SEED[i] * 30) * wob;
+        // Rotación y perspectiva
+        var rx = x * cyw + z * syw, rz = -x * syw + z * cyw;
+        var ry = y * cp - rz * spt; rz = y * spt + rz * cp;
+        var f = FOV / (FOV - rz); if (f <= 0) continue;
+        var X = cx + rx * SC * f, Y = cy + ry * SC * f;
+        // El puntero aparta las partículas y vuelven solas
+        if (ptr.on) {
+          var dx = X + OX[i] - ptr.x, dy = Y + OY[i] - ptr.y, dd = dx * dx + dy * dy;
+          if (dd < R2 && dd > .01) { var k = (1 - dd / R2) * 6 / Math.sqrt(dd); OX[i] += dx * k; OY[i] += dy * k; }
+        }
+        OX[i] *= .9; OY[i] *= .9;
+        var col = SEED[i];
+        col += (LUM[i] - col) * g; col += (TC[i] - col) * m;
+        // En el retrato el tamaño sigue la luz de la foto: así se leen ojos, pelo y sombras
+        var s = dot * Math.min(f, 1.8) * (1 + (LUM[i] * 1.1 - .75) * g * (1 - m));
+        paths[(col * (B - 1) + .5) | 0].rect(X + OX[i] - s / 2, Y + OY[i] - s / 2, s, s);
+      }
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalAlpha = .9;
+      for (b = 0; b < B; b++) { ctx.fillStyle = COLORS[b]; ctx.fill(paths[b]); }
+
+      var ns = sp < .4 ? 0 : sp < .62 ? 1 : 2;
+      if (ns !== step) { step = ns; steps.forEach(function (li, k) { li.classList.toggle('is-on', k === ns); }); }
+      if (pctEl) pctEl.textContent = ('00' + Math.round(sp * 100)).slice(-3);
+
+      if (visible) requestAnimationFrame(frame); else running = false;
+    }
+    function start() { if (running) return; running = true; requestAnimationFrame(frame); }
+
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) { progress(); start(); } }).observe(sec);
+    var rt;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { resize(); progress(); }, 150); });
+    resize(); progress();
+  }
+
   /* ---------------- Showreel interactivo ---------------- */
   function initReel() {
     var sec = $('#showreel'), v = $('#reel'), frame = $('#reelFrame'); if (!sec || !v || !frame) return;
@@ -789,7 +973,7 @@
   var CHAPTERS = [
     { id: 'top',       n: 'I',    name: { es: 'intro', en: 'intro' },         shape: 'dust',   x: .5,  y: .4,  k: 2.2,  a: .45, spin: .0006, tilt: .2,  amb: 'rgba(197,255,74,.10)' },
     { id: 'servicios', n: 'II',   name: { es: 'servicios', en: 'services' },  shape: 'wave',   x: .5,  y: .7,  k: 1.5,  a: .45, spin: .0006, tilt: .55, amb: 'rgba(74,227,255,.09)' },
-    { id: 'sobre-mi',  n: 'III',  name: { es: 'sobre mí', en: 'about' },      shape: 'ring',   x: .27, y: .5,  k: 1.4,  a: .6,  spin: .0022, tilt: 1.25,  amb: 'rgba(197,255,74,.08)' },
+    { id: 'sobre-mi',  n: 'III',  name: { es: 'sobre mí', en: 'about' },      shape: 'dust',   x: .5,  y: .5,  k: 1.6,  a: .2,  spin: .0008, tilt: .2,  amb: 'rgba(197,255,74,.08)' },
     { id: 'proyectos', n: 'IV',   name: { es: 'proyectos', en: 'work' },      shape: 'helix',  x: .9,  y: .5,  k: 1.1,  a: .5,  spin: .004,  tilt: .15, amb: 'rgba(120,140,255,.09)' },
     { id: 'proceso',   n: 'V',    name: { es: 'proceso', en: 'process' },     shape: 'tunnel', x: .78, y: .5,  k: 1,    a: .45, spin: .0012, tilt: 0,   amb: 'rgba(74,227,255,.08)' },
     { id: 'stack',     n: 'VI',   name: { es: 'stack', en: 'stack' },         shape: 'cube',   x: .2,  y: .5,  k: .85,  a: .5,  spin: .003,  tilt: .5,  amb: 'rgba(197,255,74,.08)' },
@@ -1108,6 +1292,7 @@
     safe(initPortrait, 'portrait');
     safe(initCurve, 'curve');
     safe(initShowcase, 'showcase');
+    safe(initParticleSelf, 'particleSelf');
     safe(initReel, 'reel');
     safe(initConsole, 'console');
   }
